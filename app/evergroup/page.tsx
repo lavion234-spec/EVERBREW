@@ -188,22 +188,9 @@ export default function EverGroupPage() {
       <main>
 
         {/* ── Hero ─────────────────────────────────────── */}
-        <section className="relative pt-36 pb-20 overflow-hidden border-b border-smoke">
-          {/* Rotating background banners */}
-          {BANNERS.map((src, i) => (
-            <div
-              key={src}
-              className="absolute inset-0 transition-opacity duration-1000"
-              style={{
-                backgroundImage: `url(${src})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center top',
-                opacity: bgActive === i ? 1 : 0,
-              }}
-            />
-          ))}
+        <section className="relative pt-36 pb-20 overflow-hidden border-b border-smoke bg-carbon">
           {/* Dark overlay */}
-          <div className="absolute inset-0 bg-void/75 backdrop-brightness-50" />
+          <div className="absolute inset-0 bg-void/30" />
 
           <span
             aria-hidden
@@ -392,13 +379,7 @@ export default function EverGroupPage() {
         <section className="border-b border-smoke overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[480px]">
             {/* Left — illustration */}
-            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden">
-              <img
-                src={`${CDN}/2023/11/caveiras-banner-evergoup-1.png`}
-                alt="Esqueletos no bar — EverGroup"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden bg-carbon" />
             {/* Right — content */}
             <div className="bg-bone text-void flex flex-col justify-center px-10 py-16 lg:px-16">
               <h2
@@ -526,13 +507,7 @@ export default function EverGroupPage() {
               </p>
             </div>
             {/* Right — illustration */}
-            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden">
-              <img
-                src={`${CDN}/2023/11/caveiras-banner-evergoup-2.png`}
-                alt="EverGroup — Regras do Grupo"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden bg-carbon" />
           </div>
         </section>
 
