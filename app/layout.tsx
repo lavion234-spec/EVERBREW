@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Space_Grotesk, IBM_Plex_Mono } from 'next/font/google'
 import { CartDrawer } from '@/components/layout/CartDrawer'
+import { FloatingContact } from '@/components/layout/FloatingContact'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -95,6 +96,7 @@ export default function RootLayout({
     >
       <body className="bg-void text-bone font-body antialiased">
         <CartDrawer />
+        <FloatingContact />
         {children}
       </body>
     </html>

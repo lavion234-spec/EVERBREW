@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -176,16 +176,38 @@ function BannerSlider() {
 
 /* ── Page ────────────────────────────────────────────────── */
 export default function EverGroupPage() {
+  const [bgActive, setBgActive] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => setBgActive((a) => (a + 1) % BANNERS.length), 5000)
+    return () => clearInterval(id)
+  }, [])
   return (
     <>
       <Header />
       <main>
 
         {/* ── Hero ─────────────────────────────────────── */}
-        <section className="relative pt-36 pb-20 overflow-hidden bg-carbon border-b border-smoke">
+        <section className="relative pt-36 pb-20 overflow-hidden border-b border-smoke">
+          {/* Rotating background banners */}
+          {BANNERS.map((src, i) => (
+            <div
+              key={src}
+              className="absolute inset-0 transition-opacity duration-1000"
+              style={{
+                backgroundImage: `url(${src})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                opacity: bgActive === i ? 1 : 0,
+              }}
+            />
+          ))}
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-void/75 backdrop-brightness-50" />
+
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 right-0 font-display leading-none text-white/[0.025] select-none flex items-center"
+            className="pointer-events-none absolute inset-y-0 right-0 font-display leading-none text-white/[0.04] select-none flex items-center"
             style={{ fontSize: '18vw' }}
           >
             GROUP
@@ -252,24 +274,21 @@ export default function EverGroupPage() {
                 </div>
               </div>
 
-              {/* Banner Slider */}
-              <div>
-                <BannerSlider />
-                <div className="mt-4 flex items-start gap-3 p-4 bg-iron/40 border border-smoke/50">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-fire shrink-0 mt-0.5">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
-                  <p className="text-[0.72rem] text-ash font-mono leading-relaxed">
-                    Existe apenas <span className="text-bone">UM grupo oficial</span> da Cervejaria Everbrew,
-                    administrado pelo número{' '}
-                    <a href="https://wa.me/5513997034189" className="text-[#25D366] hover:underline" target="_blank" rel="noopener noreferrer">
-                      (13) 99703-4189
-                    </a>.
-                    Desconfie de outros grupos.
-                  </p>
-                </div>
+              {/* Alert: official group only */}
+              <div className="flex items-start gap-3 p-5 bg-void/60 border border-smoke/60 backdrop-blur-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-fire shrink-0 mt-0.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <p className="text-[0.72rem] text-ash font-mono leading-relaxed">
+                  Existe apenas <span className="text-bone">UM grupo oficial</span> da Cervejaria Everbrew,
+                  administrado pelo número{' '}
+                  <a href="https://wa.me/5513997034189" className="text-[#25D366] hover:underline" target="_blank" rel="noopener noreferrer">
+                    (13) 99703-4189
+                  </a>.
+                  Desconfie de outros grupos.
+                </p>
               </div>
             </div>
           </div>
