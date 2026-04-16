@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Space_Grotesk, IBM_Plex_Mono } from 'next/font/google'
+import { CartDrawer } from '@/components/layout/CartDrawer'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -93,6 +94,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-void text-bone font-body antialiased">
+        <CartDrawer />
         {children}
       </body>
     </html>
