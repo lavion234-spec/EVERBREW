@@ -1,47 +1,9 @@
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button, LinkButton } from '@/components/ui/Button'
-import { COIN_PLANS, REVIEWS } from '@/lib/data'
+import { COIN_PLANS, REVIEWS, EVERCLUB_BENEFITS, TIER_STYLES } from '@/lib/data'
 
-const BENEFITS = [
-  {
-    icon: '◆',
-    title: 'Até 40% de desconto',
-    desc: 'Preço exclusivo de clube em todos os rótulos do catálogo.',
-  },
-  {
-    icon: '◈',
-    title: 'EverCoins',
-    desc: 'Cashback em crédito que valoriza quanto mais você investe no clube.',
-  },
-  {
-    icon: '▲',
-    title: 'Acesso antecipado',
-    desc: 'Você compra rótulos novos antes de qualquer pessoa de fora.',
-  },
-  {
-    icon: '●',
-    title: 'Frete zero',
-    desc: 'Entrega gratuita para Everclubers em todo o Brasil.',
-  },
-  {
-    icon: '◉',
-    title: 'Drops exclusivos',
-    desc: 'Rótulos que só existem para membros. Nunca aparece no site público.',
-  },
-  {
-    icon: '◐',
-    title: 'Comunidade privada',
-    desc: 'Grupo fechado com a crew Everbrew. Eventos, degustações e conteúdo direto.',
-  },
-]
-
-const TIER_STYLES: Record<string, { border: string; label: string; badge: string; img: string }> = {
-  bronze:   { border: 'border-amber/40',     label: 'text-amber',     badge: 'bg-amber/10 text-amber', img: '/EVERBREW/coins/everbronze.png'   },
-  prata:    { border: 'border-ash/40',       label: 'text-mist',      badge: 'bg-ash/10 text-mist',    img: '/EVERBREW/coins/everprata.png'    },
-  ouro:     { border: 'border-gold/70',      label: 'text-gold',      badge: 'bg-gold/15 text-gold',   img: '/EVERBREW/coins/everouro.png'     },
-  platinum: { border: 'border-bone/40',      label: 'text-bone',      badge: 'bg-bone/10 text-bone',   img: '/EVERBREW/coins/everplatinum.png' },
-}
+const BENEFITS = EVERCLUB_BENEFITS
 
 export default function EverClubPage() {
   return (
@@ -215,7 +177,7 @@ export default function EverClubPage() {
 
                     <div className="mb-1">
                       <p className="text-ash text-[0.7rem] uppercase tracking-widest">Investimento</p>
-                      <p className={`font-display text-[2.5rem] leading-none ${ts.label}`}>
+                      <p className={`font-display text-[2.5rem] leading-none ${ts.textLabel}`}>
                         R${plan.investment.toLocaleString('pt-BR')}
                       </p>
                     </div>
@@ -225,7 +187,7 @@ export default function EverClubPage() {
                       <p className="font-display text-[2rem] text-bone leading-none">
                         EVC${plan.evcReturn.toLocaleString('pt-BR')}
                       </p>
-                      <p className={`text-[0.75rem] mt-1 font-semibold ${ts.label}`}>+{plan.bonusPct}% de bônus</p>
+                      <p className={`text-[0.75rem] mt-1 font-semibold ${ts.textLabel}`}>+{plan.bonusPct}% de bônus</p>
                     </div>
 
                     {plan.installments > 1 && (

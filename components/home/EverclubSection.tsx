@@ -1,14 +1,6 @@
 import Link from 'next/link'
 import { LinkButton } from '@/components/ui/Button'
-import { COIN_PLANS } from '@/lib/data'
-import type { CoinPlan } from '@/types'
-
-const tierStyles: Record<CoinPlan['tier'], { color: string; label: string; img: string }> = {
-  bronze:   { color: '#CD7F32', label: '◈ EverBronze',   img: '/EVERBREW/coins/everbronze.png'   },
-  prata:    { color: '#C0C0C0', label: '◈ EverPrata',    img: '/EVERBREW/coins/everprata.png'    },
-  ouro:     { color: '#E8C547', label: '◈ EverOuro',     img: '/EVERBREW/coins/everouro.png'     },
-  platinum: { color: '#E5E4E2', label: '◈ EverPlatinum', img: '/EVERBREW/coins/everplatinum.png' },
-}
+import { COIN_PLANS, TIER_STYLES } from '@/lib/data'
 
 export function EverclubSection() {
   return (
@@ -111,7 +103,7 @@ export function EvercoinsSection() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px">
           {COIN_PLANS.map((plan) => {
-            const tier = tierStyles[plan.tier]
+            const tier = TIER_STYLES[plan.tier]
             return (
               <div
                 key={plan.id}

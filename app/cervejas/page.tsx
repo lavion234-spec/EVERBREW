@@ -4,16 +4,10 @@ import { useState, useMemo } from 'react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { ProductCard } from '@/components/ui/ProductCard'
-import { PRODUCTS } from '@/lib/data'
+import { PRODUCTS, BEER_STYLES, BEER_ABV_RANGES } from '@/lib/data'
 
-const STYLES = ['Todos', 'Juicy IPA', 'Double American IPA', 'Imperial Sour', 'Light Juicy IPA']
-const ABV_RANGES = [
-  { label: 'Todos', min: 0, max: 99 },
-  { label: 'Sem Álcool (até 1%)', min: 0, max: 1.1 },
-  { label: 'Leve (4–6%)', min: 4, max: 6 },
-  { label: 'Médio (6–8%)', min: 6, max: 8 },
-  { label: 'Forte (8%+)', min: 8, max: 99 },
-]
+const STYLES = BEER_STYLES
+const ABV_RANGES = BEER_ABV_RANGES
 
 export default function CervejasPage() {
   const [activeStyle, setActiveStyle] = useState('Todos')

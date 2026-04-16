@@ -1,5 +1,117 @@
 import type { Product, Kit, CoinPlan, Review, Souvenir } from '@/types'
 
+// ─── Shared constants ──────────────────────────────────────────
+export const CDN = 'https://www.everbrew.com.br/wp-content/uploads'
+export const WA_LINK = 'https://wa.me/5513997034189?text=Quero%20entrar%20no%20EverGroup!'
+
+// ─── EverGroup ─────────────────────────────────────────────────
+export const EVERGROUP_BANNERS = [
+  `${CDN}/2023/11/caveiras-banner-evergoup-1.png`,
+  `${CDN}/2023/11/caveiras-banner-evergoup-2.png`,
+  `${CDN}/2023/11/caveiras-banner-evergoup-3.png`,
+]
+
+export const EVERGROUP_BENEFITS = [
+  {
+    img:   `${CDN}/2023/11/lancamento-em-primeira-mao.jpg`,
+    title: 'Lançamentos em Primeira Mão',
+    desc:  'Fique sabendo antes de todo mundo quando um novo rótulo chega. Seja o primeiro a garantir o que sai da fábrica.',
+    tag:   'Exclusivo',
+  },
+  {
+    img:   `${CDN}/2023/11/caveira-conteudos-exclusivos.jpg`,
+    title: 'Conteúdos Exclusivos',
+    desc:  'O que é terpeno? Diferenças entre lúpulos, IBU, ABV, harmonização — tudo explicado direto pela equipe Everbrew.',
+    tag:   'Educação',
+  },
+  {
+    img:   `${CDN}/2023/11/agenda-do-pub.jpg`,
+    title: 'Agenda do EverPub',
+    desc:  'Shows, tap takeovers, degustações e eventos especiais. Você fica sabendo antes que a divulgação saia nas redes.',
+    tag:   'Eventos',
+  },
+  {
+    img:   `${CDN}/2023/11/caveira-reposicao-rotulos-prateleiras.jpg`,
+    title: 'Promoções Exclusivas',
+    desc:  'Descontos e ofertas que nunca aparecem no site público. Disponíveis só para os membros do grupo.',
+    tag:   'Ofertas',
+  },
+  {
+    img:   `${CDN}/2023/11/conteudos-sobre-cerveja.jpg`,
+    title: 'Conteúdo sobre Cerveja',
+    desc:  'Como servir corretamente, estilos, temperatura ideal, harmonização com comida. Aprenda com quem faz.',
+    tag:   'Cultura',
+  },
+  {
+    img:   `${CDN}/2023/11/caveira-agenda-de-eventos-brasil.jpg`,
+    title: 'Agenda de Eventos no Brasil',
+    desc:  'Festivais de cerveja artesanal, feiras e encontros pelo Brasil. Curadoria feita pela equipe Everbrew.',
+    tag:   'Agenda',
+  },
+]
+
+export const EVERGROUP_RULES = [
+  'O grupo é somente de transmissão — mensagens dos participantes ficam bloqueadas para manter a ordem.',
+  'É estritamente proibido enviar mensagens de cunho sexual, religioso, político ou de ódio.',
+  'Proibida a divulgação de outros produtos, serviços ou vendas de qualquer natureza.',
+  'Violações resultam em exclusão e bloqueio imediato do grupo.',
+  'Existe apenas UM grupo oficial da Cervejaria Everbrew, administrado pelo número (13) 99703-4189.',
+  'Você é livre para entrar e sair quando desejar.',
+]
+
+// ─── EverClub ──────────────────────────────────────────────────
+export const EVERCLUB_BENEFITS = [
+  { icon: '◆', title: 'Até 40% de desconto',       desc: 'Preço exclusivo de clube em todos os rótulos do catálogo.' },
+  { icon: '◈', title: 'EverCoins',                  desc: 'Cashback em crédito que valoriza quanto mais você investe no clube.' },
+  { icon: '▲', title: 'Acesso antecipado',          desc: 'Você compra rótulos novos antes de qualquer pessoa de fora.' },
+  { icon: '●', title: 'Frete zero',                 desc: 'Entrega gratuita para Everclubers em todo o Brasil.' },
+  { icon: '◉', title: 'Drops exclusivos',           desc: 'Rótulos que só existem para membros. Nunca aparece no site público.' },
+  { icon: '◐', title: 'Comunidade privada',         desc: 'Grupo fechado com a crew Everbrew. Eventos, degustações e conteúdo direto.' },
+]
+
+export const TIER_STYLES: Record<string, { color: string; label: string; img: string; border: string; badge: string; textLabel: string }> = {
+  bronze:   { color: '#CD7F32', label: '◈ EverBronze',   img: '/EVERBREW/coins/everbronze.png',   border: 'border-amber/40', badge: 'bg-amber/10 text-amber', textLabel: 'text-amber'  },
+  prata:    { color: '#C0C0C0', label: '◈ EverPrata',    img: '/EVERBREW/coins/everprata.png',    border: 'border-ash/40',   badge: 'bg-ash/10 text-mist',   textLabel: 'text-mist'   },
+  ouro:     { color: '#E8C547', label: '◈ EverOuro',     img: '/EVERBREW/coins/everouro.png',     border: 'border-gold/70',  badge: 'bg-gold/15 text-gold',  textLabel: 'text-gold'   },
+  platinum: { color: '#E5E4E2', label: '◈ EverPlatinum', img: '/EVERBREW/coins/everplatinum.png', border: 'border-bone/40',  badge: 'bg-bone/10 text-bone',  textLabel: 'text-bone'   },
+}
+
+// ─── Cervejas page ─────────────────────────────────────────────
+export const BEER_STYLES = ['Todos', 'Juicy IPA', 'Double American IPA', 'Imperial Sour', 'Light Juicy IPA']
+
+export const BEER_ABV_RANGES = [
+  { label: 'Todos',              min: 0, max: 99  },
+  { label: 'Sem Álcool (até 1%)', min: 0, max: 1.1 },
+  { label: 'Leve (4–6%)',        min: 4, max: 6   },
+  { label: 'Médio (6–8%)',       min: 6, max: 8   },
+  { label: 'Forte (8%+)',        min: 8, max: 99  },
+]
+
+// ─── Institucional ─────────────────────────────────────────────
+export const FABRICA_PHOTOS = [
+  { src: `${CDN}/2022/01/fabrica-everbrew-1.jpeg`, alt: 'Fábrica Everbrew — vista geral' },
+  { src: `${CDN}/2022/01/fabrica-everbrew-2.jpeg`, alt: 'Fábrica Everbrew — tanques de fermentação' },
+  { src: `${CDN}/2022/01/fabrica-everbrew-3.jpeg`, alt: 'Fábrica Everbrew — detalhes do equipamento' },
+  { src: `${CDN}/2022/01/fabrica-everbrew-4.jpeg`, alt: 'Fábrica Everbrew — processo de produção' },
+  { src: `${CDN}/2022/01/fabrica-everbrew-5.jpeg`, alt: 'Fábrica Everbrew — área de enlatamento' },
+  { src: `${CDN}/2022/01/fabrica-everbrew-6.jpeg`, alt: 'Fábrica Everbrew — equipamentos modernos' },
+]
+
+export const EVERPUB_PHOTOS = [
+  { src: `${CDN}/2022/01/everpub-3.jpeg`,             alt: 'EverPub — ambiente interno' },
+  { src: `${CDN}/2021/05/fachada-everbrew-santos.jpg`, alt: 'Cervejaria Everbrew — Fachada em Santos' },
+  { src: `${CDN}/2022/01/everpub-1.jpeg`,             alt: 'EverPub — balcão de chopes' },
+  { src: `${CDN}/2022/01/everpub-2.jpeg`,             alt: 'EverPub — espaço para shows' },
+  { src: `${CDN}/2022/01/everpub-5.jpeg`,             alt: 'EverPub — ambientação noturna' },
+]
+
+export const COMPANY_TIMELINE = [
+  { year: '2016', label: 'Fundação como cervejaria cigana' },
+  { year: '2018', label: 'Inauguração do EverPub em Santos' },
+  { year: '2021', label: 'Crowdfunding para fábrica própria' },
+  { year: '2022', label: 'Inauguração da fábrica no Mercado Municipal' },
+]
+
 export const PRODUCTS: Product[] = [
   {
     id:          'everdank',

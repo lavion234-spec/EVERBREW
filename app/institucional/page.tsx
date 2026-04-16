@@ -5,25 +5,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button, LinkButton } from '@/components/ui/Button'
 import { clsx } from 'clsx'
-
-const CDN = 'https://www.everbrew.com.br/wp-content/uploads'
-
-const FABRICA_PHOTOS = [
-  { src: `${CDN}/2022/01/fabrica-everbrew-1.jpeg`, alt: 'Fábrica Everbrew — vista geral' },
-  { src: `${CDN}/2022/01/fabrica-everbrew-2.jpeg`, alt: 'Fábrica Everbrew — tanques de fermentação' },
-  { src: `${CDN}/2022/01/fabrica-everbrew-3.jpeg`, alt: 'Fábrica Everbrew — detalhes do equipamento' },
-  { src: `${CDN}/2022/01/fabrica-everbrew-4.jpeg`, alt: 'Fábrica Everbrew — processo de produção' },
-  { src: `${CDN}/2022/01/fabrica-everbrew-5.jpeg`, alt: 'Fábrica Everbrew — área de enlatamento' },
-  { src: `${CDN}/2022/01/fabrica-everbrew-6.jpeg`, alt: 'Fábrica Everbrew — equipamentos modernos' },
-]
-
-const EVERPUB_PHOTOS = [
-  { src: `${CDN}/2022/01/everpub-3.jpeg`,            alt: 'EverPub — ambiente interno' },
-  { src: `${CDN}/2021/05/fachada-everbrew-santos.jpg`, alt: 'Cervejaria Everbrew — Fachada em Santos' },
-  { src: `${CDN}/2022/01/everpub-1.jpeg`,            alt: 'EverPub — balcão de chopes' },
-  { src: `${CDN}/2022/01/everpub-2.jpeg`,            alt: 'EverPub — espaço para shows' },
-  { src: `${CDN}/2022/01/everpub-5.jpeg`,            alt: 'EverPub — ambientação noturna' },
-]
+import { FABRICA_PHOTOS, EVERPUB_PHOTOS, COMPANY_TIMELINE, CDN } from '@/lib/data'
 
 // ── Lightbox types ─────────────────────────────────────────────
 type LightboxItem =
@@ -120,12 +102,7 @@ function Lightbox({ item, onClose, onPrev, onNext, hasPrev, hasNext }: {
   )
 }
 
-const TIMELINE = [
-  { year: '2016', label: 'Fundação como cervejaria cigana' },
-  { year: '2018', label: 'Inauguração do EverPub em Santos' },
-  { year: '2021', label: 'Crowdfunding para fábrica própria' },
-  { year: '2022', label: 'Inauguração da fábrica no Mercado Municipal' },
-]
+const TIMELINE = COMPANY_TIMELINE
 
 export default function InstitucionalPage() {
   const [submitted, setSubmitted] = useState(false)
