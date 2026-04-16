@@ -55,7 +55,7 @@ export default function EverClubPage() {
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: 'url(/EVERBREW/coins/everclub-hero.jpg)',
+              backgroundImage: 'url(/EVERBREW/coins/everclub-hero.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center top',
             }}
