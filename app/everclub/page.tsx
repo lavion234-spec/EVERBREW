@@ -95,7 +95,7 @@ export default function EverClubPage() {
               {/* Hero image */}
               <div className="relative hidden lg:block">
                 <img
-                  src="/EVERBREW/everclub-hero.jpg"
+                  src="/EVERBREW/coins/everclub-hero.jpg"
                   alt="EverClub — O Clube de Fidelidade da Everbrew"
                   className="w-full h-auto object-cover rounded-sm"
                 />
