@@ -274,22 +274,7 @@ export default function EverGroupPage() {
                 </div>
               </div>
 
-              {/* Alert: official group only */}
-              <div className="flex items-start gap-3 p-5 bg-void/60 border border-smoke/60 backdrop-blur-sm">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-fire shrink-0 mt-0.5">
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="8" x2="12" y2="12" />
-                  <line x1="12" y1="16" x2="12.01" y2="16" />
-                </svg>
-                <p className="text-[0.72rem] text-ash font-mono leading-relaxed">
-                  Existe apenas <span className="text-bone">UM grupo oficial</span> da Cervejaria Everbrew,
-                  administrado pelo número{' '}
-                  <a href="https://wa.me/5513997034189" className="text-[#25D366] hover:underline" target="_blank" rel="noopener noreferrer">
-                    (13) 99703-4189
-                  </a>.
-                  Desconfie de outros grupos.
-                </p>
-              </div>
+
             </div>
           </div>
         </section>
