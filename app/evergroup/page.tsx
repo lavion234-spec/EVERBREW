@@ -388,6 +388,48 @@ export default function EverGroupPage() {
           </div>
         </section>
 
+        {/* ── Curiosidades e Informação ────────────── */}
+        <section className="border-b border-smoke overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[480px]">
+            {/* Left — illustration */}
+            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden">
+              <img
+                src={`${CDN}/2023/11/caveiras-banner-evergoup-1.png`}
+                alt="Esqueletos no bar — EverGroup"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Right — content */}
+            <div className="bg-bone text-void flex flex-col justify-center px-10 py-16 lg:px-16">
+              <h2
+                className="font-display leading-tight mb-8"
+                style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', color: '#7CB518' }}
+              >
+                CURIOSIDADES E INFORMAÇÃO!
+              </h2>
+              <ul className="space-y-4 mb-8">
+                {[
+                  'O que é terpeno?',
+                  'Qual a diferença dos lúpulos?',
+                  'E o IBU e AVB – o que indicam?',
+                  'Como harmonizar cada cerveja?',
+                  'Como servi-la de forma correta?',
+                ].map((q) => (
+                  <li key={q} className="flex items-start gap-2 text-void font-medium text-[0.95rem]">
+                    <span className="shrink-0 mt-0.5" style={{ color: '#7CB518' }}>—</span>
+                    {q}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[0.82rem] text-void/60 leading-relaxed">
+                Todas essas respostas e muito mais você também receberá no grupo, porque nós
+                queremos que nossos clientes conheçam tanto de cerveja quanto nós, e extraiam
+                delas a melhor e mais completa experiência que podem proporcionar.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ── How it Works ─────────────────────────────── */}
         <section className="section-padding bg-carbon border-b border-smoke">
           <div className="container-main">
@@ -442,31 +484,55 @@ export default function EverGroupPage() {
           </div>
         </section>
 
-        {/* ── Rules ────────────────────────────────────── */}
-        <section className="section-padding bg-void border-b border-smoke">
-          <div className="container-main max-w-3xl">
-            <div className="mb-10">
-              <p className="eyebrow mb-3">Convivência</p>
+        {/* ── Regras do Grupo ───────────────────────── */}
+        <section className="border-b border-smoke overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[420px]">
+            {/* Left — content */}
+            <div className="bg-void flex flex-col justify-center px-10 py-16 lg:px-16">
               <h2
-                className="font-display text-bone leading-none"
-                style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+                className="font-display leading-tight mb-8"
+                style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', color: '#7CB518' }}
               >
-                REGRAS DO<br />
-                <span className="text-fire">GRUPO</span>
+                REGRAS DO GRUPO:
               </h2>
+              <div className="space-y-4 text-ash text-[0.85rem] leading-relaxed">
+                <p>
+                  O grupo tem o intuito de levar informações sobre a Everbrew e sobre a Cerveja da
+                  Everbrew para nossos clientes e todos os demais interessados, com isso, o envio de
+                  mensagens por parte dos participantes são bloqueadas, em virtude de mantermos a
+                  ordem no grupo.
+                </p>
+                <p>
+                  Caso, eventualmente, o envio de mensagens sejam abertas aos clientes, são
+                  estritamente proibidas mensagens de cunho sexual, religioso, político, de divulgação
+                  de outros serviços/produtos, que disseminem ódio e preconceito e venda de quaisquer
+                  objetos.
+                </p>
+                <p>
+                  Em situação onde mensagens desse tipo sejam enviadas o usuário será prontamente
+                  excluído e bloqueado, ficando impossibilitado de voltar ao grupo.
+                </p>
+              </div>
+              <p className="mt-6 text-[0.75rem] font-mono text-smoke">
+                Encontrou um grupo falso?{' '}
+                <a
+                  href="https://wa.me/5513997034189?text=Quero%20denunciar%20grupo%20falso"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fire hover:underline"
+                >
+                  Denuncie aqui →
+                </a>
+              </p>
             </div>
-            <RulesAccordion />
-            <p className="mt-5 text-ash text-[0.78rem] font-mono leading-relaxed">
-              Encontrou um grupo falso?{' '}
-              <a
-                href="https://wa.me/5513997034189?text=Quero%20denunciar%20grupo%20falso"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-fire hover:underline"
-              >
-                Denuncie aqui →
-              </a>
-            </p>
+            {/* Right — illustration */}
+            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden">
+              <img
+                src={`${CDN}/2023/11/caveiras-banner-evergoup-2.png`}
+                alt="EverGroup — Regras do Grupo"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </section>
 
