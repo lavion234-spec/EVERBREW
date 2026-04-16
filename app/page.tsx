@@ -1,6 +1,7 @@
 import { Header }      from '@/components/layout/Header'
 import { Footer }      from '@/components/layout/Footer'
 import { HeroSection } from '@/components/home/HeroSection'
+import { HeroBannerCarousel } from '@/components/home/HeroBannerCarousel'
 import { TickerBanner } from '@/components/home/TickerBanner'
 import { ProductsSection } from '@/components/home/ProductsSection'
 import { ManifestoSection } from '@/components/home/ManifestoSection'
@@ -19,6 +20,7 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
+        <HeroBannerCarousel />
         <TickerBanner />
         <ProductsSection />
         <ManifestoSection />
