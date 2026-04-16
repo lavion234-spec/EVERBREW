@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, useCallback, type FormEvent } from 'react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button, LinkButton } from '@/components/ui/Button'
+import { clsx } from 'clsx'
 
 const CDN = 'https://www.everbrew.com.br/wp-content/uploads'
 
@@ -24,7 +25,107 @@ const EVERPUB_PHOTOS = [
   { src: `${CDN}/2022/01/everpub-5.jpeg`,            alt: 'EverPub — ambientação noturna' },
 ]
 
-const TIMELINE = [
+// ── Lightbox types ─────────────────────────────────────────────
+type LightboxItem =
+  | { type: 'image'; src: string; alt: string }
+  | { type: 'video'; youtubeId: string; title: string }
+
+function Lightbox({ item, onClose, onPrev, onNext, hasPrev, hasNext }: {
+  item: LightboxItem
+  onClose: () => void
+  onPrev?: () => void
+  onNext?: () => void
+  hasPrev: boolean
+  hasNext: boolean
+}) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft' && onPrev) onPrev()
+      if (e.key === 'ArrowRight' && onNext) onNext()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [onClose, onPrev, onNext])
+
+  return (
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-void/95 backdrop-blur-sm"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      {/* Close */}
+      <button
+        onClick={onClose}
+        className="absolute top-5 right-5 z-10 w-10 h-10 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:border-fire transition-colors"
+        aria-label="Fechar"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      {/* Prev */}
+      {hasPrev && (
+        <button
+          onClick={onPrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:bg-fire/80 hover:border-fire transition-all"
+          aria-label="Anterior"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
+        </button>
+      )}
+
+      {/* Next */}
+      {hasNext && (
+        <button
+          onClick={onNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:bg-fire/80 hover:border-fire transition-all"
+          aria-label="Próximo"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6" /></svg>
+        </button>
+      )}
+
+      {/* Content */}
+      <div className="relative z-10 flex items-center justify-center w-full h-full px-16 py-12">
+        {item.type === 'image' ? (
+          <img
+            src={item.src}
+            alt={item.alt}
+            className="max-w-full max-h-full object-contain shadow-2xl border border-smoke/40"
+            onClick={(e) => e.stopPropagation()}
+          />
+        ) : (
+          <div
+            className="w-full max-w-4xl aspect-video shadow-2xl border border-smoke/40"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <iframe
+              src={`https://www.youtube.com/embed/${item.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+              title={item.title}
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
   { year: '2016', label: 'Fundação como cervejaria cigana' },
   { year: '2018', label: 'Inauguração do EverPub em Santos' },
   { year: '2021', label: 'Crowdfunding para fábrica própria' },
@@ -34,6 +135,28 @@ const TIMELINE = [
 export default function InstitucionalPage() {
   const [submitted, setSubmitted] = useState(false)
   const [email, setEmail] = useState('')
+  const [lightbox, setLightbox] = useState<{ items: LightboxItem[]; index: number } | null>(null)
+
+  const openLightbox = useCallback((items: LightboxItem[], index: number) => {
+    setLightbox({ items, index })
+  }, [])
+
+  const closeLightbox = useCallback(() => setLightbox(null), [])
+
+  const prevItem = useCallback(() => {
+    setLightbox((lb) => lb && lb.index > 0 ? { ...lb, index: lb.index - 1 } : lb)
+  }, [])
+
+  const nextItem = useCallback(() => {
+    setLightbox((lb) => lb && lb.index < lb.items.length - 1 ? { ...lb, index: lb.index + 1 } : lb)
+  }, [])
+
+  // Build lightbox item sets
+  const fabricaItems: LightboxItem[] = [
+    { type: 'video', youtubeId: '0GfulXeCf9M', title: 'Tour pela Fábrica Everbrew' },
+    ...FABRICA_PHOTOS.map((p) => ({ type: 'image' as const, src: p.src, alt: p.alt })),
+  ]
+  const everpubItems: LightboxItem[] = EVERPUB_PHOTOS.map((p) => ({ type: 'image' as const, src: p.src, alt: p.alt }))
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -42,6 +165,16 @@ export default function InstitucionalPage() {
 
   return (
     <>
+      {lightbox && (
+        <Lightbox
+          item={lightbox.items[lightbox.index]}
+          onClose={closeLightbox}
+          onPrev={lightbox.index > 0 ? prevItem : undefined}
+          onNext={lightbox.index < lightbox.items.length - 1 ? nextItem : undefined}
+          hasPrev={lightbox.index > 0}
+          hasNext={lightbox.index < lightbox.items.length - 1}
+        />
+      )}
       <Header />
       <main>
 
@@ -345,17 +478,15 @@ export default function InstitucionalPage() {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-void/50 flex items-center justify-center">
-                  <a
-                    href="https://www.youtube.com/watch?v=0GfulXeCf9M"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => openLightbox(fabricaItems, 0)}
                     className="w-20 h-20 bg-fire/90 hover:bg-fire flex items-center justify-center transition-all duration-200 hover:scale-110"
-                    aria-label="Assistir vídeo tour pela Fábrica Everbrew no YouTube"
+                    aria-label="Assistir vídeo tour pela Fábrica Everbrew"
                   >
                     <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M8 5v14l11-7z" />
                     </svg>
-                  </a>
+                  </button>
                 </div>
                 <div className="absolute bottom-4 left-4">
                   <p className="font-mono text-[0.65rem] tracking-[0.12em] uppercase text-bone/70">▶ Tour pela Fábrica</p>
@@ -365,15 +496,30 @@ export default function InstitucionalPage() {
               {/* Photo grid */}
               <div className="grid grid-cols-3 gap-px">
                 {FABRICA_PHOTOS.map((photo, i) => (
-                  <div key={i} className="relative bg-iron overflow-hidden group" style={{ aspectRatio: '1' }}>
+                  <button
+                    key={i}
+                    onClick={() => openLightbox(fabricaItems, i + 1)}
+                    className="relative bg-iron overflow-hidden group cursor-zoom-in focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fire"
+                    style={{ aspectRatio: '1' }}
+                    aria-label={`Ver foto: ${photo.alt}`}
+                  >
                     <img
                       src={photo.src}
                       alt={photo.alt}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-void/20 group-hover:bg-transparent transition-all duration-300" />
-                  </div>
+                    <div className={clsx(
+                      'absolute inset-0 flex items-center justify-center',
+                      'bg-void/20 group-hover:bg-void/50 transition-all duration-300'
+                    )}>
+                      <svg className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                        <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                        <line x1="11" y1="8" x2="11" y2="14" />
+                        <line x1="8" y1="11" x2="14" y2="11" />
+                      </svg>
+                    </div>
+                  </button>
                 ))}
               </div>
 
@@ -389,26 +535,53 @@ export default function InstitucionalPage() {
               {/* Gallery */}
               <div className="grid grid-cols-2 gap-px border border-smoke">
                 {/* Feature */}
-                <div className="col-span-2 relative overflow-hidden group" style={{ height: '300px' }}>
+                <button
+                  onClick={() => openLightbox(everpubItems, 0)}
+                  className="col-span-2 relative overflow-hidden group cursor-zoom-in focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fire"
+                  style={{ height: '300px' }}
+                  aria-label={`Ver foto: ${EVERPUB_PHOTOS[0].alt}`}
+                >
                   <img
                     src={EVERPUB_PHOTOS[0].src}
                     alt={EVERPUB_PHOTOS[0].alt}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-void/60 to-transparent" />
-                </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-void/60 to-transparent group-hover:from-void/30 transition-all duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <svg className="w-8 h-8 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                      <line x1="11" y1="8" x2="11" y2="14" />
+                      <line x1="8" y1="11" x2="14" y2="11" />
+                    </svg>
+                  </div>
+                </button>
                 {/* Thumbnails */}
                 {EVERPUB_PHOTOS.slice(1).map((photo, i) => (
-                  <div key={i} className="relative overflow-hidden group" style={{ height: '150px' }}>
+                  <button
+                    key={i}
+                    onClick={() => openLightbox(everpubItems, i + 1)}
+                    className="relative overflow-hidden group cursor-zoom-in focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-fire"
+                    style={{ height: '150px' }}
+                    aria-label={`Ver foto: ${photo.alt}`}
+                  >
                     <img
                       src={photo.src}
                       alt={photo.alt}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-void/20 group-hover:bg-transparent transition-all duration-300" />
-                  </div>
+                    <div className={clsx(
+                      'absolute inset-0 flex items-center justify-center',
+                      'bg-void/20 group-hover:bg-void/50 transition-all duration-300'
+                    )}>
+                      <svg className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                        <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                        <line x1="11" y1="8" x2="11" y2="14" />
+                        <line x1="8" y1="11" x2="14" y2="11" />
+                      </svg>
+                    </div>
+                  </button>
                 ))}
               </div>
 
