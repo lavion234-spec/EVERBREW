@@ -126,6 +126,8 @@ function Lightbox({ item, onClose, onPrev, onNext, hasPrev, hasNext }: {
     </div>
   )
 }
+
+const TIMELINE = [
   { year: '2016', label: 'Fundação como cervejaria cigana' },
   { year: '2018', label: 'Inauguração do EverPub em Santos' },
   { year: '2021', label: 'Crowdfunding para fábrica própria' },
