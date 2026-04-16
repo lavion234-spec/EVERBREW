@@ -1,0 +1,430 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { clsx } from 'clsx'
+
+const CDN = 'https://www.everbrew.com.br/wp-content/uploads'
+
+const WA_LINK = 'https://wa.me/5513997034189?text=Quero%20entrar%20no%20EverGroup!'
+
+const BENEFITS = [
+  {
+    img:     `${CDN}/2023/11/lancamento-em-primeira-mao.jpg`,
+    title:   'Lançamentos em Primeira Mão',
+    desc:    'Fique sabendo antes de todo mundo quando um novo rótulo chega. Seja o primeiro a garantir o que sai da fábrica.',
+    tag:     'Exclusivo',
+  },
+  {
+    img:     `${CDN}/2023/11/caveira-conteudos-exclusivos.jpg`,
+    title:   'Conteúdos Exclusivos',
+    desc:    'O que é terpeno? Diferenças entre lúpulos, IBU, ABV, harmonização — tudo explicado direto pela equipe Everbrew.',
+    tag:     'Educação',
+  },
+  {
+    img:     `${CDN}/2023/11/agenda-do-pub.jpg`,
+    title:   'Agenda do EverPub',
+    desc:    'Shows, tap takeovers, degustações e eventos especiais. Você fica sabendo antes que a divulgação saia nas redes.',
+    tag:     'Eventos',
+  },
+  {
+    img:     `${CDN}/2023/11/caveira-reposicao-rotulos-prateleiras.jpg`,
+    title:   'Promoções Exclusivas',
+    desc:    'Descontos e ofertas que nunca aparecem no site público. Disponíveis só para os membros do grupo.',
+    tag:     'Ofertas',
+  },
+  {
+    img:     `${CDN}/2023/11/conteudos-sobre-cerveja.jpg`,
+    title:   'Conteúdo sobre Cerveja',
+    desc:    'Como servir corretamente, estilos, temperatura ideal, harmonização com comida. Aprenda com quem faz.',
+    tag:     'Cultura',
+  },
+  {
+    img:     `${CDN}/2023/11/caveira-agenda-de-eventos-brasil.jpg`,
+    title:   'Agenda de Eventos no Brasil',
+    desc:    'Festivais de cerveja artesanal, feiras e encontros pelo Brasil. Curadoria feita pela equipe Everbrew.',
+    tag:     'Agenda',
+  },
+]
+
+const RULES = [
+  'O grupo é somente de transmissão — mensagens dos participantes ficam bloqueadas para manter a ordem.',
+  'É estritamente proibido enviar mensagens de cunho sexual, religioso, político ou de ódio.',
+  'Proibida a divulgação de outros produtos, serviços ou vendas de qualquer natureza.',
+  'Violações resultam em exclusão e bloqueio imediato do grupo.',
+  'Existe apenas UM grupo oficial da Cervejaria Everbrew, administrado pelo número (13) 99703-4189.',
+  'Você é livre para entrar e sair quando desejar.',
+]
+
+const BANNERS = [
+  `${CDN}/2023/11/caveiras-banner-evergoup-1.png`,
+  `${CDN}/2023/11/caveiras-banner-evergoup-2.png`,
+  `${CDN}/2023/11/caveiras-banner-evergoup-3.png`,
+]
+
+/* ── BenefitCard ─────────────────────────────────────────── */
+function BenefitCard({ img, title, desc, tag }: typeof BENEFITS[0]) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div
+      className="group relative overflow-hidden bg-carbon border border-smoke hover:border-fire/50 transition-all duration-300 cursor-default"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Image */}
+      <div className="relative h-52 overflow-hidden">
+        <img
+          src={img}
+          alt={title}
+          className={clsx(
+            'w-full h-full object-cover transition-transform duration-500',
+            hovered ? 'scale-110' : 'scale-100'
+          )}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/30 to-transparent" />
+        <span className="absolute top-3 right-3 px-2 py-0.5 bg-fire/90 text-white text-[0.65rem] font-mono uppercase tracking-widest">
+          {tag}
+        </span>
+      </div>
+      {/* Content */}
+      <div className="p-6">
+        <h3 className="font-display text-[1.3rem] tracking-[0.08em] text-bone leading-tight mb-2">
+          {title}
+        </h3>
+        <p className="text-ash text-[0.82rem] leading-relaxed">{desc}</p>
+      </div>
+    </div>
+  )
+}
+
+/* ── RulesAccordion ──────────────────────────────────────── */
+function RulesAccordion() {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="border border-smoke">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center justify-between px-8 py-5 text-left hover:bg-iron/50 transition-colors"
+      >
+        <span className="font-display text-xl tracking-[0.1em] text-bone uppercase">
+          Regras do Grupo
+        </span>
+        <svg
+          width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2.5"
+          className={clsx('text-fire transition-transform duration-300 shrink-0', open ? 'rotate-180' : '')}
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      <div
+        className={clsx(
+          'overflow-hidden transition-all duration-500',
+          open ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+        )}
+      >
+        <ul className="px-8 pb-6 space-y-3">
+          {RULES.map((rule, i) => (
+            <li key={i} className="flex gap-3 text-[0.85rem] text-ash leading-relaxed">
+              <span className="text-fire font-mono mt-0.5 shrink-0">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              {rule}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+/* ── BannerSlider ────────────────────────────────────────── */
+function BannerSlider() {
+  const [active, setActive] = useState(0)
+  return (
+    <div className="relative overflow-hidden rounded-none border border-smoke aspect-[16/7]">
+      {BANNERS.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`EverGroup banner ${i + 1}`}
+          className={clsx(
+            'absolute inset-0 w-full h-full object-cover transition-opacity duration-700',
+            active === i ? 'opacity-100' : 'opacity-0'
+          )}
+        />
+      ))}
+      {/* Dots */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        {BANNERS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={clsx(
+              'h-1 transition-all duration-300',
+              active === i ? 'w-8 bg-fire' : 'w-2 bg-white/40 hover:bg-white/70'
+            )}
+            aria-label={`Banner ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* ── Page ────────────────────────────────────────────────── */
+export default function EverGroupPage() {
+  return (
+    <>
+      <Header />
+      <main>
+
+        {/* ── Hero ─────────────────────────────────────── */}
+        <section className="relative pt-36 pb-20 overflow-hidden bg-carbon border-b border-smoke">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 right-0 font-display leading-none text-white/[0.025] select-none flex items-center"
+            style={{ fontSize: '18vw' }}
+          >
+            GROUP
+          </span>
+          <div className="container-main relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="flex items-center gap-3 mb-5">
+                  {/* WhatsApp icon */}
+                  <div className="w-8 h-8 bg-[#25D366]/15 border border-[#25D366]/40 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                  </div>
+                  <p className="text-[0.7rem] font-mono uppercase tracking-widest text-ash">
+                    Grupo Oficial de WhatsApp
+                  </p>
+                </div>
+
+                <h1
+                  className="font-display text-bone leading-none"
+                  style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)' }}
+                >
+                  EVER<span className="text-fire">GROUP</span>
+                </h1>
+
+                <p className="text-ash mt-5 max-w-md leading-relaxed" style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)' }}>
+                  O grupo de WhatsApp oficial da Cervejaria Everbrew. Lançamentos, promoções exclusivas,
+                  conteúdo sobre cerveja e a agenda do EverPub — direto no seu celular.
+                </p>
+
+                <div className="flex flex-wrap gap-4 mt-10">
+                  <a
+                    href={WA_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] text-white font-semibold text-[0.875rem] uppercase tracking-[0.15em] hover:brightness-110 transition-all"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    Entrar no Grupo
+                  </a>
+                  <a
+                    href="#conteudo"
+                    className="inline-flex items-center gap-2 px-8 py-4 border border-smoke text-ash hover:text-bone hover:border-steel text-[0.875rem] font-semibold uppercase tracking-[0.15em] transition-all"
+                  >
+                    Ver Conteúdo
+                  </a>
+                </div>
+
+                {/* Stats */}
+                <div className="flex gap-8 mt-12">
+                  {[
+                    ['Gratuito', 'Sem custo'],
+                    ['1 Grupo', '100% Oficial'],
+                    ['WhatsApp', 'Acesso direto'],
+                  ].map(([val, lab]) => (
+                    <div key={lab}>
+                      <p className="font-display text-[1.6rem] text-fire leading-none">{val}</p>
+                      <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ash mt-1">{lab}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Banner Slider */}
+              <div>
+                <BannerSlider />
+                <div className="mt-4 flex items-start gap-3 p-4 bg-iron/40 border border-smoke/50">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-fire shrink-0 mt-0.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                  <p className="text-[0.72rem] text-ash font-mono leading-relaxed">
+                    Existe apenas <span className="text-bone">UM grupo oficial</span> da Cervejaria Everbrew,
+                    administrado pelo número{' '}
+                    <a href="https://wa.me/5513997034189" className="text-[#25D366] hover:underline" target="_blank" rel="noopener noreferrer">
+                      (13) 99703-4189
+                    </a>.
+                    Desconfie de outros grupos.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Benefits ─────────────────────────────────── */}
+        <section id="conteudo" className="section-padding bg-void border-b border-smoke">
+          <div className="container-main">
+            <div className="mb-14">
+              <p className="eyebrow mb-3">O que você recebe</p>
+              <h2
+                className="font-display text-bone leading-none"
+                style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
+              >
+                CONTEÚDO<br />
+                <span className="text-fire">EXCLUSIVO</span>
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {BENEFITS.map((b) => (
+                <BenefitCard key={b.title} {...b} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── How it Works ─────────────────────────────── */}
+        <section className="section-padding bg-carbon border-b border-smoke">
+          <div className="container-main">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+              {/* Screenshot chat */}
+              <div className="relative">
+                <div className="border border-smoke overflow-hidden">
+                  <img
+                    src={`${CDN}/2021/11/chat-whatsapp.png`}
+                    alt="Exemplo do chat do EverGroup"
+                    className="w-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-fire/30 bg-carbon flex items-center justify-center">
+                  <img
+                    src={`${CDN}/2023/11/caveira-bracos-cruzados.png`}
+                    alt=""
+                    aria-hidden="true"
+                    className="w-full h-full object-contain p-2"
+                  />
+                </div>
+              </div>
+
+              {/* Steps */}
+              <div>
+                <p className="eyebrow mb-3">Como funciona</p>
+                <h2
+                  className="font-display text-bone leading-none mb-8"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+                >
+                  SIMPLES<br />ASSIM
+                </h2>
+                <div className="space-y-4">
+                  {[
+                    { n: '01', t: 'Clique em Entrar no Grupo',            d: 'Você será redirecionado para o WhatsApp com link direto para o grupo oficial.' },
+                    { n: '02', t: 'Solicite a entrada',                    d: 'No WhatsApp, confirme a entrada. A aprovação é automática.' },
+                    { n: '03', t: 'Receba conteúdo exclusivo',             d: 'Lançamentos, promoções e conteúdo cervejeiro diretamente no seu celular.' },
+                    { n: '04', t: 'Aproveite os benefícios',               d: 'Acesse promoções que nunca aparecem no site e ingressos antecipados para eventos.' },
+                  ].map(({ n, t, d }) => (
+                    <div key={n} className="flex gap-5 p-5 border border-smoke bg-iron hover:border-fire/40 transition-colors group">
+                      <span className="font-mono text-[0.7rem] tracking-widest text-fire shrink-0 mt-0.5">{n}</span>
+                      <div>
+                        <p className="text-bone font-semibold text-[0.9rem] group-hover:text-fire transition-colors">{t}</p>
+                        <p className="text-ash text-[0.8rem] mt-1 leading-relaxed">{d}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Rules ────────────────────────────────────── */}
+        <section className="section-padding bg-void border-b border-smoke">
+          <div className="container-main max-w-3xl">
+            <div className="mb-10">
+              <p className="eyebrow mb-3">Convivência</p>
+              <h2
+                className="font-display text-bone leading-none"
+                style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+              >
+                REGRAS DO<br />
+                <span className="text-fire">GRUPO</span>
+              </h2>
+            </div>
+            <RulesAccordion />
+            <p className="mt-5 text-ash text-[0.78rem] font-mono leading-relaxed">
+              Encontrou um grupo falso?{' '}
+              <a
+                href="https://wa.me/5513997034189?text=Quero%20denunciar%20grupo%20falso"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-fire hover:underline"
+              >
+                Denuncie aqui →
+              </a>
+            </p>
+          </div>
+        </section>
+
+        {/* ── CTA Final ────────────────────────────────── */}
+        <section className="section-padding bg-carbon overflow-hidden relative">
+          {/* Skull decoration */}
+          <div className="pointer-events-none absolute right-0 bottom-0 w-80 opacity-10 select-none">
+            <img
+              src={`${CDN}/2022/08/caveira-apontando.png`}
+              alt=""
+              aria-hidden="true"
+              className="w-full"
+            />
+          </div>
+
+          <div className="container-main relative text-center">
+            <p className="eyebrow mb-4">É grátis</p>
+            <h2
+              className="font-display text-bone leading-none mb-5"
+              style={{ fontSize: 'clamp(3rem, 7vw, 6rem)' }}
+            >
+              ENTRA NO<br />
+              <span className="text-fire">GRUPO</span>
+            </h2>
+            <p className="text-ash text-[0.9rem] max-w-sm mx-auto mb-10 leading-relaxed">
+              Acesso gratuito. Saia quando quiser. Sem spam — só conteúdo que vale a pena.
+            </p>
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-10 py-4 bg-[#25D366] text-white font-bold text-[0.875rem] uppercase tracking-[0.2em] hover:brightness-110 transition-all"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              Entrar no EverGroup
+            </a>
+
+            <div className="mt-8 flex flex-wrap justify-center gap-6 text-[0.72rem] font-mono text-smoke">
+              <span>✓ Totalmente gratuito</span>
+              <span>✓ Sem spam</span>
+              <span>✓ Saia quando quiser</span>
+              <span>✓ 100% oficial</span>
+            </div>
+          </div>
+        </section>
+
+      </main>
+      <Footer />
+    </>
+  )
+}

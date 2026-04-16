@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { label: 'Loja',          href: '/loja' },
   { label: '◆ EverClub',   href: '/everclub',       isClub: true },
   { label: 'EverCoins',     href: '/everclub#planos' },
+  { label: 'EverGroup',     href: '/evergroup' },
   { label: 'Institucional', href: '/institucional' },
 ] as const
 
