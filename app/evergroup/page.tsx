@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -56,6 +56,12 @@ const RULES = [
   'Violações resultam em exclusão e bloqueio imediato do grupo.',
   'Existe apenas UM grupo oficial da Cervejaria Everbrew, administrado pelo número (13) 99703-4189.',
   'Você é livre para entrar e sair quando desejar.',
+]
+
+const BANNERS = [
+  `${CDN}/2023/11/caveiras-banner-evergoup-1.png`,
+  `${CDN}/2023/11/caveiras-banner-evergoup-2.png`,
+  `${CDN}/2023/11/caveiras-banner-evergoup-3.png`,
 ]
 
 /* ── BenefitCard ─────────────────────────────────────────── */
@@ -136,15 +142,35 @@ function RulesAccordion() {
 
 /* ── Page ────────────────────────────────────────────────── */
 export default function EverGroupPage() {
+  const [bgActive, setBgActive] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => setBgActive((a) => (a + 1) % BANNERS.length), 5000)
+    return () => clearInterval(id)
+  }, [])
+
   return (
     <>
       <Header />
       <main>
 
         {/* ── Hero ─────────────────────────────────────── */}
-        <section className="relative pt-36 pb-20 overflow-hidden border-b border-smoke bg-carbon">
+        <section className="relative pt-36 pb-20 overflow-hidden border-b border-smoke">
+          {/* Rotating background banners */}
+          {BANNERS.map((src, i) => (
+            <div
+              key={src}
+              className="absolute inset-0 transition-opacity duration-1000"
+              style={{
+                backgroundImage: `url(${src})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                opacity: bgActive === i ? 1 : 0,
+              }}
+            />
+          ))}
           {/* Dark overlay */}
-          <div className="absolute inset-0 bg-void/30" />
+          <div className="absolute inset-0 bg-void/75 backdrop-brightness-50" />
 
           <span
             aria-hidden
@@ -333,7 +359,13 @@ export default function EverGroupPage() {
         <section className="border-b border-smoke overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[480px]">
             {/* Left — illustration */}
-            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden bg-carbon" />
+            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden">
+              <img
+                src={`${CDN}/2023/11/caveiras-banner-evergoup-1.png`}
+                alt="Esqueletos no bar — EverGroup"
+                className="w-full h-full object-cover"
+              />
+            </div>
             {/* Right — content */}
             <div className="bg-bone text-void flex flex-col justify-center px-10 py-16 lg:px-16">
               <h2
@@ -451,7 +483,13 @@ export default function EverGroupPage() {
               </p>
             </div>
             {/* Right — illustration */}
-            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden bg-carbon" />
+            <div className="relative min-h-[340px] lg:min-h-0 overflow-hidden">
+              <img
+                src={`${CDN}/2023/11/caveiras-banner-evergoup-2.png`}
+                alt="EverGroup — Regras do Grupo"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </section>
 
