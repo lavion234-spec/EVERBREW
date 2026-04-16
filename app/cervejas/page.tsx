@@ -36,10 +36,22 @@ export default function CervejasPage() {
       <main>
 
         {/* Page Hero */}
-        <section className="pt-32 pb-16 border-b border-smoke bg-carbon relative overflow-hidden">
+        <section className="pt-32 pb-16 border-b border-smoke relative overflow-hidden">
+          {/* Background image */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'url(/EVERBREW/coins/cervejas-hero.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center top',
+            }}
+          />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-void/75 backdrop-brightness-50" />
+
           <span
             aria-hidden
-            className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 font-display text-[20vw] leading-none text-white/[0.02] select-none"
+            className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 font-display text-[20vw] leading-none text-white/[0.04] select-none"
           >
             CERVEJAS
           </span>
