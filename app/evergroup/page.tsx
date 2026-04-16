@@ -414,26 +414,7 @@ export default function EverGroupPage() {
         {/* ── How it Works ─────────────────────────────── */}
         <section className="section-padding bg-carbon border-b border-smoke">
           <div className="container-main">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-              {/* Screenshot chat */}
-              <div className="relative">
-                <div className="border border-smoke overflow-hidden">
-                  <img
-                    src={`${CDN}/2021/11/chat-whatsapp.png`}
-                    alt="Exemplo do chat do EverGroup"
-                    className="w-full object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-fire/30 bg-carbon flex items-center justify-center">
-                  <img
-                    src={`${CDN}/2023/11/caveira-bracos-cruzados.png`}
-                    alt=""
-                    aria-hidden="true"
-                    className="w-full h-full object-contain p-2"
-                  />
-                </div>
-              </div>
+            <div className="max-w-2xl mx-auto">
 
               {/* Steps */}
               <div>
