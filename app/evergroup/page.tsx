@@ -538,15 +538,6 @@ export default function EverGroupPage() {
 
         {/* ── CTA Final ────────────────────────────────── */}
         <section className="section-padding bg-carbon overflow-hidden relative">
-          {/* Skull decoration */}
-          <div className="pointer-events-none absolute right-0 bottom-0 w-80 opacity-10 select-none">
-            <img
-              src={`${CDN}/2022/08/caveira-apontando.png`}
-              alt=""
-              aria-hidden="true"
-              className="w-full"
-            />
-          </div>
 
           <div className="container-main relative text-center">
             <p className="eyebrow mb-4">É grátis</p>
