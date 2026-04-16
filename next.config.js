@@ -4,6 +4,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const nextConfig = {
   output: 'export',
   basePath: isProd ? '/EVERBREW' : '',
+  generateBuildId: async () => Date.now().toString(),
   trailingSlash: true,
   images: {
     unoptimized: true,

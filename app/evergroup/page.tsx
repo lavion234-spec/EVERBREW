@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -56,12 +56,6 @@ const RULES = [
   'Violações resultam em exclusão e bloqueio imediato do grupo.',
   'Existe apenas UM grupo oficial da Cervejaria Everbrew, administrado pelo número (13) 99703-4189.',
   'Você é livre para entrar e sair quando desejar.',
-]
-
-const BANNERS = [
-  `${CDN}/2023/11/caveiras-banner-evergoup-1.png`,
-  `${CDN}/2023/11/caveiras-banner-evergoup-2.png`,
-  `${CDN}/2023/11/caveiras-banner-evergoup-3.png`,
 ]
 
 /* ── BenefitCard ─────────────────────────────────────────── */
@@ -140,48 +134,8 @@ function RulesAccordion() {
   )
 }
 
-/* ── BannerSlider ────────────────────────────────────────── */
-function BannerSlider() {
-  const [active, setActive] = useState(0)
-  return (
-    <div className="relative overflow-hidden rounded-none border border-smoke aspect-[16/7]">
-      {BANNERS.map((src, i) => (
-        <img
-          key={src}
-          src={src}
-          alt={`EverGroup banner ${i + 1}`}
-          className={clsx(
-            'absolute inset-0 w-full h-full object-cover transition-opacity duration-700',
-            active === i ? 'opacity-100' : 'opacity-0'
-          )}
-        />
-      ))}
-      {/* Dots */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-        {BANNERS.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            className={clsx(
-              'h-1 transition-all duration-300',
-              active === i ? 'w-8 bg-fire' : 'w-2 bg-white/40 hover:bg-white/70'
-            )}
-            aria-label={`Banner ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
 /* ── Page ────────────────────────────────────────────────── */
 export default function EverGroupPage() {
-  const [bgActive, setBgActive] = useState(0)
-
-  useEffect(() => {
-    const id = setInterval(() => setBgActive((a) => (a + 1) % BANNERS.length), 5000)
-    return () => clearInterval(id)
-  }, [])
   return (
     <>
       <Header />
