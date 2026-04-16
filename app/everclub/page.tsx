@@ -36,11 +36,11 @@ const BENEFITS = [
   },
 ]
 
-const TIER_STYLES: Record<string, { border: string; label: string; badge: string }> = {
-  bronze:   { border: 'border-amber/40',     label: 'text-amber',     badge: 'bg-amber/10 text-amber' },
-  prata:    { border: 'border-ash/40',       label: 'text-mist',      badge: 'bg-ash/10 text-mist' },
-  ouro:     { border: 'border-gold/70',      label: 'text-gold',      badge: 'bg-gold/15 text-gold' },
-  platinum: { border: 'border-bone/40',      label: 'text-bone',      badge: 'bg-bone/10 text-bone' },
+const TIER_STYLES: Record<string, { border: string; label: string; badge: string; img: string }> = {
+  bronze:   { border: 'border-amber/40',     label: 'text-amber',     badge: 'bg-amber/10 text-amber', img: '/EVERBREW/coins/everbronze.png'   },
+  prata:    { border: 'border-ash/40',       label: 'text-mist',      badge: 'bg-ash/10 text-mist',    img: '/EVERBREW/coins/everprata.png'    },
+  ouro:     { border: 'border-gold/70',      label: 'text-gold',      badge: 'bg-gold/15 text-gold',   img: '/EVERBREW/coins/everouro.png'     },
+  platinum: { border: 'border-bone/40',      label: 'text-bone',      badge: 'bg-bone/10 text-bone',   img: '/EVERBREW/coins/everplatinum.png' },
 }
 
 export default function EverClubPage() {
@@ -188,6 +188,11 @@ export default function EverClubPage() {
                         MAIS POPULAR
                       </span>
                     )}
+                    <img
+                      src={ts.img}
+                      alt={plan.tierLabel}
+                      className="w-20 h-20 object-contain mb-4"
+                    />
                     <div className={`inline-block px-3 py-1 text-[0.65rem] uppercase tracking-widest font-bold mb-6 ${ts.badge}`}>
                       {plan.tierLabel}
                     </div>
