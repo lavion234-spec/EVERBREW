@@ -1,0 +1,2558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVERBREW — Cerveja Artesanal Extrema | Redesign Prototype</title>
+  <meta name="description" content="Cervejaria artesanal de Santos. Hop-forward ou nada.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       EVERBREW — DESIGN SYSTEM v2.0
+       Dark Premium Industrial + Craft Punk
+    ============================================ */
+    :root {
+      --void:       #070707;
+      --carbon:     #0E0E0E;
+      --iron:       #161616;
+      --smoke:      #282828;
+      --steel:      #3A3A3A;
+      --ash:        #707070;
+      --mist:       #A0A0A0;
+      --bone:       #E8DDD0;
+      --cream:      #F5EDD8;
+      --white:      #FAFAFA;
+      --fire:       #FF4500;
+      --ember:      #FF6B2B;
+      --amber:      #FF8C00;
+      --gold:       #C49A28;
+      --gold-light: #E8C547;
+      --hop:        #7CB518;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Space Grotesk', sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+      --nav-h: 72px;
+      --container: 1280px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--void);
+      color: var(--bone);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    ul { list-style: none; }
+
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* TYPOGRAPHY */
+    .t-display { font-family: var(--font-display); line-height: 0.9; letter-spacing: 0.02em; }
+    .t-mono    { font-family: var(--font-mono); }
+    .t-fire    { color: var(--fire); }
+    .t-gold    { color: var(--gold-light); }
+    .t-ash     { color: var(--ash); }
+    .t-bone    { color: var(--bone); }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 2px;
+      transition: all 200ms var(--ease);
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.08);
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+    .btn:hover::after { opacity: 1; }
+
+    .btn--primary {
+      background: var(--fire);
+      color: var(--white);
+    }
+    .btn--primary:hover { background: var(--ember); transform: translateY(-1px); }
+
+    .btn--secondary {
+      background: transparent;
+      color: var(--bone);
+      border: 1px solid rgba(232,221,208,0.35);
+    }
+    .btn--secondary:hover { border-color: var(--bone); background: rgba(232,221,208,0.06); }
+
+    .btn--gold {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--void);
+      font-weight: 700;
+    }
+    .btn--gold:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    .btn--full { width: 100%; }
+    .btn--sm { padding: 10px 20px; font-size: 0.8rem; }
+    .btn--lg { padding: 18px 44px; font-size: 1rem; }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .badge--style  { background: rgba(255,69,0,0.12); color: var(--fire); border: 1px solid rgba(255,69,0,0.3); }
+    .badge--new    { background: rgba(255,140,0,0.12); color: var(--amber); border: 1px solid rgba(255,140,0,0.3); }
+    .badge--hop    { background: rgba(124,181,24,0.12); color: var(--hop); border: 1px solid rgba(124,181,24,0.3); }
+    .badge--gold   { background: rgba(196,154,40,0.15); color: var(--gold-light); border: 1px solid rgba(196,154,40,0.3); }
+    .badge--muted  { background: var(--smoke); color: var(--ash); border: 1px solid var(--steel); }
+
+    /* SECTION LABEL */
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fire);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--fire);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      color: var(--bone);
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--smoke);
+    }
+
+    /* ============================================
+       AGE GATE
+    ============================================ */
+    #age-gate {
+      position: fixed;
+      inset: 0;
+      background: var(--void);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity 600ms var(--ease), visibility 600ms;
+    }
+    #age-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .age-gate__inner {
+      text-align: center;
+      max-width: 480px;
+    }
+    .age-gate__logo {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      letter-spacing: 0.08em;
+      color: var(--bone);
+      margin-bottom: 8px;
+    }
+    .age-gate__tagline {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--ash);
+      text-transform: uppercase;
+      margin-bottom: 56px;
+    }
+    .age-gate__question {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--bone);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .age-gate__sub {
+      font-size: 0.85rem;
+      color: var(--ash);
+      margin-bottom: 40px;
+    }
+    .age-gate__actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    .age-gate__legal {
+      margin-top: 40px;
+      font-size: 0.7rem;
+      color: var(--steel);
+      line-height: 1.6;
+    }
+    .age-gate__decoration {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 20vw;
+      color: var(--iron);
+      pointer-events: none;
+      user-select: none;
+      z-index: -1;
+    }
+    .age-gate__decoration--left  { left: -2vw; top: 50%; transform: translateY(-50%); }
+    .age-gate__decoration--right { right: -2vw; top: 50%; transform: translateY(-50%); }
+
+    /* ============================================
+       HEADER
+    ============================================ */
+    #header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      transition: background 300ms var(--ease), backdrop-filter 300ms, border-bottom 300ms;
+    }
+    #header.scrolled {
+      background: rgba(7,7,7,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--smoke);
+    }
+    .header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .header__logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.1em;
+      color: var(--bone);
+      transition: color 200ms;
+    }
+    .header__logo:hover { color: var(--fire); }
+    .header__logo span { color: var(--fire); }
+
+    .header__nav { display: flex; align-items: center; gap: 36px; }
+    .header__nav a {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ash);
+      transition: color 200ms;
+      position: relative;
+    }
+    .header__nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 1px;
+      background: var(--fire);
+      transform: scaleX(0);
+      transition: transform 200ms var(--ease);
+      transform-origin: left;
+    }
+    .header__nav a:hover { color: var(--bone); }
+    .header__nav a:hover::after { transform: scaleX(1); }
+    .header__nav a.nav--club { color: var(--gold-light); }
+    .header__nav a.nav--club:hover { color: var(--gold-light); }
+    .header__nav a.nav--club::after { background: var(--gold-light); }
+
+    .header__actions { display: flex; align-items: center; gap: 20px; }
+    .header__icon-btn {
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ash);
+      border: 1px solid transparent;
+      border-radius: 2px;
+      transition: all 200ms;
+      font-size: 1rem;
+      position: relative;
+    }
+    .header__icon-btn:hover { color: var(--bone); border-color: var(--smoke); }
+    .cart-badge {
+      position: absolute;
+      top: -4px; right: -4px;
+      width: 16px; height: 16px;
+      background: var(--fire);
+      border-radius: 50%;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .header__login {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ash);
+      padding: 8px 16px;
+      border: 1px solid var(--smoke);
+      border-radius: 2px;
+      transition: all 200ms;
+    }
+    .header__login:hover { color: var(--bone); border-color: var(--steel); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
+    .hamburger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--bone);
+      transition: all 300ms var(--ease);
+    }
+
+    /* ============================================
+       HERO SECTION
+    ============================================ */
+    #hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 50%, rgba(255,69,0,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 30% 80%, rgba(255,140,0,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero__grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--smoke) 1px, transparent 1px),
+        linear-gradient(90deg, var(--smoke) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .hero__content {
+      padding: 80px 0 80px 0;
+      z-index: 1;
+    }
+    .hero__eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 28px;
+    }
+    .hero__eyebrow .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--fire);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero__headline {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 10vw, 9.5rem);
+      line-height: 0.88;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+    }
+    .hero__headline .line-fire { color: var(--fire); display: block; }
+    .hero__headline .line-bone { color: var(--bone); display: block; }
+    .hero__headline .line-outline {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--bone);
+      display: block;
+      opacity: 0.5;
+    }
+    .hero__sub {
+      font-size: 1.05rem;
+      color: var(--ash);
+      margin-top: 28px;
+      margin-bottom: 44px;
+      max-width: 440px;
+      line-height: 1.7;
+    }
+    .hero__sub strong { color: var(--bone); }
+    .hero__ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .hero__stats {
+      display: flex; gap: 40px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid var(--smoke);
+    }
+    .hero-stat { }
+    .hero-stat__value {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--bone);
+      line-height: 1;
+    }
+    .hero-stat__value span { color: var(--fire); font-size: 1.4rem; }
+    .hero-stat__label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-top: 4px;
+    }
+
+    .hero__visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      min-height: 500px;
+    }
+    .hero__can-wrap {
+      position: relative;
+      width: 300px;
+    }
+    .hero__can-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px; height: 500px;
+      background: radial-gradient(ellipse, rgba(255,69,0,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero__can-img {
+      width: 100%;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 40px 60px rgba(0,0,0,0.8));
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    .hero__can-decor {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: var(--ash);
+      font-size: 0.7rem;
+    }
+    .hero__can-decor--abv { top: 40%; right: -100px; }
+    .hero__can-decor--ibu { bottom: 35%; right: -80px; }
+    .hero__can-decor--style { top: 30%; left: -80px; transform: rotate(-90deg); }
+
+    /* ============================================
+       TICKER
+    ============================================ */
+    #ticker {
+      background: var(--iron);
+      border-top: 1px solid var(--smoke);
+      border-bottom: 1px solid var(--smoke);
+      padding: 18px 0;
+      overflow: hidden;
+    }
+    .ticker__track {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: ticker 25s linear infinite;
+      width: max-content;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker__item {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      padding: 0 32px;
+      color: var(--ash);
+    }
+    .ticker__item--fire { color: var(--fire); }
+    .ticker__sep {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      color: var(--smoke);
+      vertical-align: middle;
+      padding: 0 4px;
+    }
+
+    /* ============================================
+       PRODUCTS SECTION
+    ============================================ */
+    #products {
+      padding: 120px 0;
+    }
+    .products__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 60px;
+    }
+    .products__link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ash);
+      border-bottom: 1px solid var(--smoke);
+      padding-bottom: 4px;
+      transition: color 200ms, border-color 200ms;
+    }
+    .products__link:hover { color: var(--bone); border-color: var(--bone); }
+
+    .products__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .product-card {
+      background: var(--carbon);
+      border: 1px solid var(--smoke);
+      position: relative;
+      transition: border-color 300ms var(--ease), transform 300ms var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      border-color: rgba(255,69,0,0.4);
+      transform: translateY(-4px);
+      z-index: 1;
+    }
+    .product-card:hover .product-card__overlay { opacity: 1; }
+    .product-card:hover .product-card__img { transform: scale(1.05); }
+
+    .product-card__top {
+      padding: 16px 16px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .product-card__image-wrap {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-card__img {
+      height: 180px;
+      width: auto;
+      object-fit: contain;
+      transition: transform 400ms var(--ease);
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6));
+    }
+    .product-card__img-placeholder {
+      height: 180px;
+      width: 90px;
+      background: linear-gradient(180deg, var(--iron) 0%, var(--carbon) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--smoke);
+    }
+    .product-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7,7,7,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 300ms;
+    }
+
+    .product-card__body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+    .product-card__stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .product-stat {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--ash);
+    }
+    .product-stat strong { color: var(--mist); }
+    .product-card__name {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      letter-spacing: 0.04em;
+      color: var(--bone);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .product-card__pricing { margin-bottom: 16px; }
+    .price-club {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .price-club__label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(196,154,40,0.1);
+      border: 1px solid rgba(196,154,40,0.2);
+      padding: 2px 6px;
+      border-radius: 1px;
+    }
+    .price-club__value {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .price-club__discount {
+      font-size: 0.65rem;
+      color: var(--ash);
+      margin-left: auto;
+    }
+
+    .price-regular { display: flex; align-items: center; gap: 8px; }
+    .price-regular__label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--ash);
+    }
+    .price-regular__value {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--mist);
+    }
+    .price-cashback {
+      font-size: 0.65rem;
+      color: var(--hop);
+      margin-left: auto;
+    }
+
+    .product-card__cta { margin-top: auto; }
+
+    /* ============================================
+       MANIFESTO SECTION
+    ============================================ */
+    #manifesto {
+      padding: 140px 0;
+      border-top: 1px solid var(--smoke);
+      border-bottom: 1px solid var(--smoke);
+      position: relative;
+      overflow: hidden;
+    }
+    .manifesto__bg-text {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 22vw;
+      color: var(--iron);
+      white-space: nowrap;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+    .manifesto__inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .manifesto__left { }
+    .manifesto__center {
+      text-align: center;
+    }
+    .manifesto__quote {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      line-height: 1.05;
+      color: var(--bone);
+      letter-spacing: 0.02em;
+    }
+    .manifesto__quote em { color: var(--fire); font-style: normal; }
+    .manifesto__attribution {
+      margin-top: 32px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--ash);
+      text-transform: uppercase;
+    }
+    .manifesto__right {}
+    .manifesto__body {
+      font-size: 0.95rem;
+      color: var(--ash);
+      line-height: 1.8;
+    }
+    .manifesto__body p + p { margin-top: 20px; }
+    .manifesto__stats {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .manifesto-stat__value {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--fire);
+      line-height: 1;
+    }
+    .manifesto-stat__label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    /* ============================================
+       EVERCLUB SECTION
+    ============================================ */
+    #everclub {
+      padding: 120px 0;
+    }
+    .everclub__inner {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .everclub__content { }
+    .everclub__benefits {
+      margin-top: 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .benefit-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 20px;
+      background: var(--carbon);
+      border: 1px solid var(--smoke);
+      transition: border-color 200ms;
+    }
+    .benefit-item:hover { border-color: var(--steel); }
+    .benefit-item__icon {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--fire);
+      width: 48px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .benefit-item__title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--bone);
+      margin-bottom: 4px;
+    }
+    .benefit-item__desc {
+      font-size: 0.8rem;
+      color: var(--ash);
+    }
+
+    .everclub__card {
+      background: var(--iron);
+      border: 1px solid var(--smoke);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .everclub__card::before {
+      content: '◆';
+      position: absolute;
+      top: -20px; right: -20px;
+      font-size: 120px;
+      color: rgba(196,154,40,0.05);
+      line-height: 1;
+    }
+    .everclub__card-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 16px;
+    }
+    .everclub__card-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      line-height: 0.95;
+      color: var(--bone);
+      margin-bottom: 8px;
+    }
+    .everclub__card-sub {
+      font-size: 0.85rem;
+      color: var(--ash);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    .everclub__card-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .perk {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--bone);
+    }
+    .perk::before {
+      content: '→';
+      color: var(--fire);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+    .everclub__card-social {
+      padding-top: 28px;
+      border-top: 1px solid var(--smoke);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+    .everclub__card-social strong { color: var(--bone); }
+
+    /* ============================================
+       EVERCOINS SECTION
+    ============================================ */
+    #evercoins {
+      padding: 120px 0;
+      background: var(--carbon);
+      border-top: 1px solid var(--smoke);
+      border-bottom: 1px solid var(--smoke);
+    }
+    .evercoins__header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 64px;
+    }
+    .evercoins__desc {
+      font-size: 0.95rem;
+      color: var(--ash);
+      line-height: 1.8;
+    }
+    .coins__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .coin-plan {
+      background: var(--iron);
+      border: 1px solid var(--smoke);
+      padding: 32px 24px;
+      transition: all 300ms var(--ease);
+      position: relative;
+    }
+    .coin-plan:hover { border-color: var(--steel); transform: translateY(-4px); }
+    .coin-plan--featured { border-color: var(--gold) !important; }
+    .coin-plan--featured .coin-plan__badge { display: block; }
+
+    .coin-plan__badge {
+      display: none;
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--void);
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+    }
+    .coin-plan__tier {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .coin-plan__tier--bronze { color: #CD7F32; }
+    .coin-plan__tier--prata  { color: #C0C0C0; }
+    .coin-plan__tier--ouro   { color: var(--gold-light); }
+    .coin-plan__tier--plat   { color: #E5E4E2; }
+
+    .coin-plan__invest {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      color: var(--bone);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .coin-plan__invest-label {
+      font-size: 0.75rem;
+      color: var(--ash);
+      margin-bottom: 20px;
+    }
+    .coin-plan__return {
+      padding: 16px 0;
+      border-top: 1px solid var(--smoke);
+      border-bottom: 1px solid var(--smoke);
+      margin-bottom: 20px;
+    }
+    .coin-plan__evc {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .coin-plan__bonus {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--hop);
+      margin-top: 4px;
+    }
+    .coin-plan__installments {
+      font-size: 0.75rem;
+      color: var(--ash);
+      margin-bottom: 24px;
+    }
+
+    /* ============================================
+       NEW ARRIVALS / NOVOS LOTES
+    ============================================ */
+    #new-arrivals {
+      padding: 120px 0;
+    }
+    .arrivals__inner {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2px;
+    }
+    .arrival__feature {
+      background: var(--carbon);
+      border: 1px solid var(--smoke);
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+    }
+    .arrival__feature-img {
+      position: absolute;
+      right: -40px;
+      bottom: -20px;
+      height: 480px;
+      width: auto;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    .arrival__feature-content { position: relative; z-index: 1; }
+    .arrival__lote {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fire);
+      background: rgba(255,69,0,0.1);
+      border: 1px solid rgba(255,69,0,0.2);
+      padding: 6px 12px;
+      display: inline-block;
+      margin-bottom: 28px;
+    }
+    .arrival__title {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      line-height: 0.9;
+      color: var(--bone);
+      margin-bottom: 20px;
+    }
+    .arrival__desc {
+      font-size: 0.9rem;
+      color: var(--ash);
+      line-height: 1.8;
+      max-width: 360px;
+      margin-bottom: 36px;
+    }
+    .arrival__meta {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .arrival-meta__item { }
+    .arrival-meta__value {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--bone);
+    }
+    .arrival-meta__label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    .arrival__list {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .arrival-item {
+      background: var(--carbon);
+      border: 1px solid var(--smoke);
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      transition: border-color 200ms, background 200ms;
+    }
+    .arrival-item:hover { border-color: var(--steel); background: var(--iron); }
+    .arrival-item__img {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    }
+    .arrival-item__info { flex: 1; }
+    .arrival-item__style {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 4px;
+    }
+    .arrival-item__name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--bone);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .arrival-item__price {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--mist);
+    }
+    .arrival-item__price strong { color: var(--gold-light); }
+
+    /* ============================================
+       SOCIAL PROOF
+    ============================================ */
+    #social-proof {
+      padding: 120px 0;
+      background: var(--carbon);
+      border-top: 1px solid var(--smoke);
+    }
+    .social-proof__grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .social-proof__numbers { }
+    .sp-number {
+      margin-bottom: 40px;
+    }
+    .sp-number__value {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      line-height: 0.9;
+      color: var(--fire);
+    }
+    .sp-number__label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-top: 8px;
+    }
+    .social-proof__Reviews { }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .review-card {
+      background: var(--iron);
+      border: 1px solid var(--smoke);
+      padding: 28px;
+    }
+    .review-card__stars {
+      color: var(--gold-light);
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+    }
+    .review-card__text {
+      font-size: 0.875rem;
+      color: var(--bone);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .review-card__author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .review-card__avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--smoke);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--bone);
+    }
+    .review-card__name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--bone);
+    }
+    .review-card__platform {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--ash);
+    }
+
+    /* ============================================
+       NEWSLETTER
+    ============================================ */
+    #newsletter {
+      padding: 100px 0;
+      border-top: 1px solid var(--smoke);
+    }
+    .newsletter__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .newsletter__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      color: var(--bone);
+    }
+    .newsletter__title span { color: var(--fire); }
+    .newsletter__sub {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: var(--ash);
+    }
+    .newsletter__form {
+      display: flex;
+      gap: 0;
+    }
+    .newsletter__input {
+      flex: 1;
+      background: var(--iron);
+      border: 1px solid var(--smoke);
+      border-right: none;
+      color: var(--bone);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 16px 24px;
+      outline: none;
+      border-radius: 0;
+      transition: border-color 200ms;
+    }
+    .newsletter__input::placeholder { color: var(--steel); }
+    .newsletter__input:focus { border-color: var(--ash); }
+    .newsletter__legal {
+      margin-top: 12px;
+      font-size: 0.7rem;
+      color: var(--steel);
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    #footer {
+      background: var(--carbon);
+      border-top: 1px solid var(--smoke);
+      padding: 80px 0 40px;
+    }
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    .footer__brand-logo {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      letter-spacing: 0.08em;
+      color: var(--bone);
+      margin-bottom: 8px;
+    }
+    .footer__brand-logo span { color: var(--fire); }
+    .footer__tagline {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 24px;
+    }
+    .footer__desc {
+      font-size: 0.8rem;
+      color: var(--ash);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .footer__social { display: flex; gap: 12px; margin-bottom: 24px; }
+    .social-btn {
+      width: 36px; height: 36px;
+      border: 1px solid var(--smoke);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ash);
+      font-size: 0.8rem;
+      transition: all 200ms;
+      border-radius: 2px;
+    }
+    .social-btn:hover { border-color: var(--bone); color: var(--bone); }
+
+    .footer__col-title {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bone);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--smoke);
+    }
+    .footer__links { display: flex; flex-direction: column; gap: 12px; }
+    .footer__links a {
+      font-size: 0.8rem;
+      color: var(--ash);
+      transition: color 200ms;
+    }
+    .footer__links a:hover { color: var(--bone); }
+
+    .footer__bottom {
+      padding-top: 32px;
+      border-top: 1px solid var(--smoke);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer__legal {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--steel);
+    }
+    .footer__18 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--steel);
+      border: 1px solid var(--smoke);
+      padding: 4px 10px;
+    }
+    .footer__payments {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .payment-badge {
+      background: var(--iron);
+      border: 1px solid var(--smoke);
+      padding: 5px 10px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    /* ============================================
+       MOBILE DRAWER MENU
+    ============================================ */
+    #mobile-menu {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 320px;
+      background: var(--carbon);
+      border-left: 1px solid var(--smoke);
+      z-index: 2000;
+      transform: translateX(100%);
+      transition: transform 400ms var(--ease);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      overflow-y: auto;
+    }
+    #mobile-menu.open { transform: translateX(0); }
+    .mobile-menu__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--smoke);
+    }
+    .mobile-menu__close {
+      font-size: 1.4rem;
+      color: var(--ash);
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mobile-menu__links { display: flex; flex-direction: column; gap: 4px; }
+    .mobile-menu__links a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.04em;
+      color: var(--ash);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--smoke);
+      transition: color 200ms;
+    }
+    .mobile-menu__links a:hover { color: var(--bone); }
+    .mobile-menu__links a.club-link { color: var(--gold-light); }
+    .mobile-menu__cta {
+      margin-top: auto;
+      padding-top: 32px;
+    }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7,7,7,0.8);
+      z-index: 1999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 400ms;
+    }
+    #overlay.active { opacity: 1; pointer-events: auto; }
+
+    /* ============================================
+       REVEAL ANIMATIONS
+    ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 100ms; }
+    .reveal-delay-2 { transition-delay: 200ms; }
+    .reveal-delay-3 { transition-delay: 300ms; }
+    .reveal-delay-4 { transition-delay: 400ms; }
+
+    /* ============================================
+       KITS SECTION
+    ============================================ */
+    #kits {
+      padding: 80px 0;
+      border-top: 1px solid var(--smoke);
+    }
+    .kits__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 56px;
+    }
+    .kit-card {
+      background: var(--carbon);
+      border: 1px solid var(--smoke);
+      padding: 56px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 320px;
+      transition: border-color 300ms;
+    }
+    .kit-card:hover { border-color: rgba(255,69,0,0.3); }
+    .kit-card__subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 16px;
+    }
+    .kit-card__title {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      line-height: 0.95;
+      color: var(--bone);
+      margin-bottom: 16px;
+    }
+    .kit-card__desc {
+      font-size: 0.85rem;
+      color: var(--ash);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 320px;
+    }
+    .kit-card__cta { margin-top: auto; }
+    .kit-card__decor {
+      position: absolute;
+      right: -40px;
+      bottom: -30px;
+      font-family: var(--font-display);
+      font-size: 16rem;
+      line-height: 0.8;
+      color: var(--iron);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ============================================
+       STICKY CART BAR (Mobile)
+    ============================================ */
+    #sticky-cart {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--carbon);
+      border-top: 1px solid var(--smoke);
+      padding: 16px 24px;
+      z-index: 900;
+      align-items: center;
+      gap: 16px;
+    }
+    .sticky-cart__info { flex: 1; }
+    .sticky-cart__name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--bone);
+      line-height: 1;
+    }
+    .sticky-cart__price {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--ash);
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 1024px) {
+      .products__grid   { grid-template-columns: repeat(2, 1fr); }
+      .coins__grid       { grid-template-columns: repeat(2, 1fr); }
+      .footer__grid      { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .manifesto__inner  { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .manifesto__left   { order: 2; display: flex; justify-content: center; gap: 48px; }
+      .manifesto__stats  { flex-direction: row; }
+      .manifesto__right  { order: 3; }
+      .everclub__inner   { grid-template-columns: 1fr; gap: 60px; }
+      .arrivals__inner   { grid-template-columns: 1fr; }
+      .arrival__list     { grid-template-rows: unset; grid-template-columns: 1fr; }
+      .evercoins__header { grid-template-columns: 1fr; gap: 24px; }
+      .social-proof__grid { grid-template-columns: 1fr; }
+      .newsletter__inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 60px; }
+      .header__nav  { display: none; }
+      .header__login { display: none; }
+      .hamburger { display: flex; }
+
+      #hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: calc(var(--nav-h) + 40px) 0 60px;
+      }
+      .hero__visual { display: none; }
+      .hero__sub { margin: 20px auto 36px; }
+      .hero__ctas { justify-content: center; }
+      .hero__stats { justify-content: center; }
+
+      .products__grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+      .coins__grid    { grid-template-columns: 1fr 1fr; }
+      .kits__grid     { grid-template-columns: 1fr; }
+      .reviews-grid   { grid-template-columns: 1fr; }
+
+      .footer__grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      #sticky-cart { display: flex; }
+    }
+
+    @media (max-width: 480px) {
+      .products__grid { grid-template-columns: 1fr; }
+      .coins__grid    { grid-template-columns: 1fr; }
+      .arrival__feature { padding: 40px 28px; }
+      .hero__headline { font-size: clamp(4rem, 15vw, 6rem); }
+    }
+
+    /* Toast notification */
+    #toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--iron);
+      border: 1px solid var(--smoke);
+      color: var(--bone);
+      font-size: 0.85rem;
+      padding: 14px 24px;
+      z-index: 9000;
+      opacity: 0;
+      transition: opacity 300ms, transform 300ms var(--spring);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    #toast .toast-icon { color: var(--hop); }
+  </style>
+</head>
+<body>
+
+  <!-- AGE GATE -->
+  <div id="age-gate">
+    <span class="age-gate__decoration age-gate__decoration--left">18</span>
+    <span class="age-gate__decoration age-gate__decoration--right">+</span>
+    <div class="age-gate__inner">
+      <div class="age-gate__logo">EVER<span style="color:var(--fire)">BREW</span></div>
+      <p class="age-gate__tagline">Bones for Life · Santos/SP · Since 2017</p>
+      <h2 class="age-gate__question">Você tem<br>18 anos ou mais?</h2>
+      <p class="age-gate__sub">Esta cerveja é para adultos. Só entre se puder.</p>
+      <div class="age-gate__actions">
+        <button class="btn btn--primary btn--lg" onclick="confirmAge()">SIM, TENHO 18+</button>
+        <button class="btn btn--secondary btn--lg" onclick="denyAge()">NÃO</button>
+      </div>
+      <p class="age-gate__legal">
+        Ao entrar, você confirma ter 18 anos ou mais e concorda com<br>
+        os Termos de Uso e Política de Privacidade.<br>
+        Beba com moderação. Venda proibida para menores.
+      </p>
+    </div>
+  </div>
+
+  <!-- MOBILE OVERLAY -->
+  <div id="overlay" onclick="closeMenu()"></div>
+
+  <!-- MOBILE MENU DRAWER -->
+  <div id="mobile-menu">
+    <div class="mobile-menu__header">
+      <div style="font-family:var(--font-display);font-size:1.5rem;letter-spacing:0.1em">
+        EVER<span style="color:var(--fire)">BREW</span>
+      </div>
+      <button class="mobile-menu__close" onclick="closeMenu()">✕</button>
+    </div>
+    <nav class="mobile-menu__links">
+      <a href="#">Cervejas</a>
+      <a href="#" class="club-link">◆ EverClub</a>
+      <a href="#">EverCoins</a>
+      <a href="#">Kits & Combos</a>
+      <a href="#">Loja</a>
+      <a href="#">Sobre</a>
+    </nav>
+    <div class="mobile-menu__cta">
+      <a href="#" class="btn btn--gold btn--full">ENTRAR NO EVERCLUB</a>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="container">
+      <div class="header__inner">
+        <a href="#" class="header__logo">EVER<span>BREW</span></a>
+        <nav class="header__nav">
+          <a href="#products">Cervejas</a>
+          <a href="#kits">Kits & Combos</a>
+          <a href="#everclub" class="nav--club">◆ EverClub</a>
+          <a href="#evercoins">EverCoins</a>
+          <a href="#">Sobre</a>
+        </nav>
+        <div class="header__actions">
+          <button class="header__icon-btn" title="Buscar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+          <button class="header__icon-btn" title="Favoritos">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <button class="header__icon-btn" title="Carrinho" style="position:relative">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <span class="cart-badge">0</span>
+          </button>
+          <a href="#" class="header__login">Entrar</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__grid-lines"></div>
+    <div class="container" style="display:contents">
+      <div class="hero__content container">
+        <p class="hero__eyebrow">
+          <span class="dot"></span>
+          Cervejaria Artesanal · Santos/SP · Since 2017
+        </p>
+        <h1 class="hero__headline t-display">
+          <span class="line-bone">BEBA</span>
+          <span class="line-fire">DIFERENTE.</span>
+          <span class="line-outline">PENSE</span>
+          <span class="line-bone">EXTREMO.</span>
+        </h1>
+        <p class="hero__sub">
+          <strong>Hop-forward ou nada.</strong> Cada lata é um lote limitado de intensidade artesanal. Feita para quem sabe que cerveja é muito mais que bebida.
+        </p>
+        <div class="hero__ctas">
+          <a href="#products" class="btn btn--primary btn--lg">EXPLORAR RÓTULOS →</a>
+          <a href="#everclub" class="btn btn--secondary btn--lg">◆ ENTRAR NO EVERCLUB</a>
+        </div>
+        <div class="hero__stats reveal">
+          <div class="hero-stat">
+            <div class="hero-stat__value">13<span>+</span></div>
+            <div class="hero-stat__label">Rótulos Ativos</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat__value">40<span>%</span></div>
+            <div class="hero-stat__label">Off no Club</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat__value">12<span>k</span></div>
+            <div class="hero-stat__label">Everclubbers</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat__value">&#x2605;<span>4.8</span></div>
+            <div class="hero-stat__label">Untappd</div>
+          </div>
+        </div>
+      </div>
+      <!-- VISUAL (desktop) -->
+      <div class="hero__visual">
+        <div class="hero__can-wrap">
+          <div class="hero__can-glow"></div>
+          <img
+            src="https://www.everbrew.com.br/wp-content/uploads/2022/01/EVEBREW.evermaine-971x1536.png"
+            alt="Cerveja Evermaine Everbrew"
+            class="hero__can-img"
+            loading="eager"
+            onerror="this.style.display='none'"
+          />
+          <div class="hero__can-decor hero__can-decor--abv t-mono t-ash">ABV · 7.7%</div>
+          <div class="hero__can-decor hero__can-decor--ibu t-mono t-ash">IBU · 60</div>
+          <div class="hero__can-decor hero__can-decor--style t-mono t-ash">JUICY IPA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div id="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__item ticker__item--fire">BONES FOR LIFE</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">JUICY IPA</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item ticker__item--fire">EXTREMAMENTE ARTESANAL</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">SANTOS / SP</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">HOP FORWARD</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item ticker__item--fire">DOUBLE IPA</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">IMPERIAL SOUR</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">SINCE 2017</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item ticker__item--fire">CERVEJA EXTREMA</span>
+      <span class="ticker__item">·</span>
+      <!-- Repeat for seamless loop -->
+      <span class="ticker__item ticker__item--fire">BONES FOR LIFE</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">JUICY IPA</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item ticker__item--fire">EXTREMAMENTE ARTESANAL</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">SANTOS / SP</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">HOP FORWARD</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item ticker__item--fire">DOUBLE IPA</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">IMPERIAL SOUR</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">SINCE 2017</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item ticker__item--fire">CERVEJA EXTREMA</span>
+      <span class="ticker__item">·</span>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="container">
+      <div class="products__header reveal">
+        <div>
+          <p class="section-eyebrow">Portfólio</p>
+          <h2 class="section-title">RÓTULOS<br>EXTREMOS</h2>
+        </div>
+        <a href="#" class="products__link">VER COLEÇÃO COMPLETA →</a>
+      </div>
+      <div class="products__grid">
+
+        <!-- EverDank -->
+        <article class="product-card reveal reveal-delay-1">
+          <div class="product-card__top">
+            <span class="badge badge--style">JUICY IPA</span>
+            <span class="badge badge--new">NOVO LOTE</span>
+          </div>
+          <div class="product-card__image-wrap">
+            <img
+              src="https://www.everbrew.com.br/wp-content/uploads/2022/01/EverDank.png"
+              alt="EverDank"
+              class="product-card__img"
+              onerror="this.parentElement.innerHTML='<div class=\'product-card__img-placeholder\'><span style=\'font-family:var(--font-display);color:var(--ash);font-size:0.8rem;letter-spacing:0.1em\'>EVERDANK</span></div>'"
+            />
+            <div class="product-card__overlay">
+              <button class="btn btn--primary" onclick="addToCart('EverDank')">ADICIONAR</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <div class="product-card__stats">
+              <span class="product-stat"><strong>ABV</strong> 7.5%</span>
+              <span class="product-stat"><strong>IBU</strong> 60</span>
+              <span class="product-stat">473ml</span>
+            </div>
+            <h3 class="product-card__name">EVERDANK</h3>
+            <div class="product-card__pricing">
+              <div class="price-club">
+                <span class="price-club__label">◆ Club</span>
+                <span class="price-club__value">EVC$ 31,50</span>
+                <span class="price-club__discount">até 40% Off</span>
+              </div>
+              <div class="price-regular">
+                <span class="price-regular__label">Cliente</span>
+                <span class="price-regular__value">R$ 42,40</span>
+                <span class="price-cashback">+15% cashback</span>
+              </div>
+            </div>
+            <div class="product-card__cta">
+              <button class="btn btn--primary btn--full" onclick="addToCart('EverDank')">ADICIONAR AO CARRINHO</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- What a Grocery -->
+        <article class="product-card reveal reveal-delay-2">
+          <div class="product-card__top">
+            <span class="badge badge--style">IMPERIAL SOUR</span>
+          </div>
+          <div class="product-card__image-wrap">
+            <img
+              src="https://www.everbrew.com.br/wp-content/uploads/2022/01/WHATAGROCERY.png"
+              alt="What a Grocery"
+              class="product-card__img"
+              onerror="this.parentElement.innerHTML='<div class=\'product-card__img-placeholder\'><span style=\'font-family:var(--font-display);color:var(--ash);font-size:0.7rem;letter-spacing:0.05em\'>WHAT A<br>GROCERY</span></div>'"
+            />
+            <div class="product-card__overlay">
+              <button class="btn btn--primary" onclick="addToCart('What a Grocery')">ADICIONAR</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <div class="product-card__stats">
+              <span class="product-stat"><strong>ABV</strong> 7.0%</span>
+              <span class="product-stat"><strong>IBU</strong> 4</span>
+              <span class="product-stat">473ml</span>
+            </div>
+            <h3 class="product-card__name">WHAT A GROCERY</h3>
+            <div class="product-card__pricing">
+              <div class="price-club">
+                <span class="price-club__label">◆ Club</span>
+                <span class="price-club__value">EVC$ 31,50</span>
+                <span class="price-club__discount">até 40% Off</span>
+              </div>
+              <div class="price-regular">
+                <span class="price-regular__label">Cliente</span>
+                <span class="price-regular__value">R$ 42,40</span>
+                <span class="price-cashback">+15% cashback</span>
+              </div>
+            </div>
+            <div class="product-card__cta">
+              <button class="btn btn--primary btn--full" onclick="addToCart('What a Grocery')">ADICIONAR AO CARRINHO</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Double EverIPA -->
+        <article class="product-card reveal reveal-delay-3">
+          <div class="product-card__top">
+            <span class="badge badge--style">DOUBLE IPA</span>
+            <span class="badge badge--gold">DESTAQUE</span>
+          </div>
+          <div class="product-card__image-wrap">
+            <img
+              src="https://www.everbrew.com.br/wp-content/uploads/2022/03/EVERBREW.DOUBLEeverIPA.png"
+              alt="Double EverIPA"
+              class="product-card__img"
+              onerror="this.parentElement.innerHTML='<div class=\'product-card__img-placeholder\'><span style=\'font-family:var(--font-display);color:var(--ash);font-size:0.7rem;letter-spacing:0.05em\'>DOUBLE<br>EVERIPA</span></div>'"
+            />
+            <div class="product-card__overlay">
+              <button class="btn btn--primary" onclick="addToCart('Double EverIPA')">ADICIONAR</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <div class="product-card__stats">
+              <span class="product-stat"><strong>ABV</strong> 8.0%</span>
+              <span class="product-stat"><strong>IBU</strong> 80</span>
+              <span class="product-stat">473ml</span>
+            </div>
+            <h3 class="product-card__name">DOUBLE EVERIPA</h3>
+            <div class="product-card__pricing">
+              <div class="price-club">
+                <span class="price-club__label">◆ Club</span>
+                <span class="price-club__value">EVC$ 28,50</span>
+                <span class="price-club__discount">até 40% Off</span>
+              </div>
+              <div class="price-regular">
+                <span class="price-regular__label">Cliente</span>
+                <span class="price-regular__value">R$ 39,40</span>
+                <span class="price-cashback">+15% cashback</span>
+              </div>
+            </div>
+            <div class="product-card__cta">
+              <button class="btn btn--primary btn--full" onclick="addToCart('Double EverIPA')">ADICIONAR AO CARRINHO</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Falling Coconut -->
+        <article class="product-card reveal reveal-delay-4">
+          <div class="product-card__top">
+            <span class="badge badge--style">JUICY IPA</span>
+            <span class="badge badge--hop">TROPICAL</span>
+          </div>
+          <div class="product-card__image-wrap">
+            <img
+              src="https://www.everbrew.com.br/wp-content/uploads/2022/01/EVEBREW.falling-coconuts.png"
+              alt="Falling Coconut"
+              class="product-card__img"
+              onerror="this.parentElement.innerHTML='<div class=\'product-card__img-placeholder\'><span style=\'font-family:var(--font-display);color:var(--ash);font-size:0.7rem;letter-spacing:0.05em\'>FALLING<br>COCONUT</span></div>'"
+            />
+            <div class="product-card__overlay">
+              <button class="btn btn--primary" onclick="addToCart('Falling Coconut')">ADICIONAR</button>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <div class="product-card__stats">
+              <span class="product-stat"><strong>ABV</strong> 7.0%</span>
+              <span class="product-stat"><strong>IBU</strong> 65</span>
+              <span class="product-stat">473ml</span>
+            </div>
+            <h3 class="product-card__name">FALLING COCONUT</h3>
+            <div class="product-card__pricing">
+              <div class="price-club">
+                <span class="price-club__label">◆ Club</span>
+                <span class="price-club__value">EVC$ 31,50</span>
+                <span class="price-club__discount">até 40% Off</span>
+              </div>
+              <div class="price-regular">
+                <span class="price-regular__label">Cliente</span>
+                <span class="price-regular__value">R$ 42,40</span>
+                <span class="price-cashback">+15% cashback</span>
+              </div>
+            </div>
+            <div class="product-card__cta">
+              <button class="btn btn--primary btn--full" onclick="addToCart('Falling Coconut')">ADICIONAR AO CARRINHO</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section id="manifesto">
+    <div class="manifesto__bg-text" aria-hidden="true">EVER</div>
+    <div class="container">
+      <div class="manifesto__inner">
+        <div class="manifesto__left">
+          <div class="manifesto__stats">
+            <div>
+              <div class="manifesto-stat__value">2017</div>
+              <div class="manifesto-stat__label">Fundação</div>
+            </div>
+            <div>
+              <div class="manifesto-stat__value">7+</div>
+              <div class="manifesto-stat__label">Anos de história</div>
+            </div>
+            <div>
+              <div class="manifesto-stat__value">13</div>
+              <div class="manifesto-stat__label">Rótulos ativos</div>
+            </div>
+          </div>
+        </div>
+        <div class="manifesto__center reveal">
+          <p class="section-eyebrow" style="justify-content:center">Nossa Filosofia</p>
+          <blockquote class="manifesto__quote">
+            "Não fazemos cerveja<br>para <em>todo mundo.</em><br>Não porque não<br>podemos.<br>Porque <em>escolhemos.</em>"
+          </blockquote>
+          <p class="manifesto__attribution">— Cervejaria Everbrew · Santos/SP</p>
+        </div>
+        <div class="manifesto__right reveal">
+          <div class="manifesto__body">
+            <p>Nascida em Santos em 2017, a Everbrew foi criada por pessoas que se recusaram a fazer cerveja mediana. Nossa filosofia é simples: intensidade máxima em cada lote.</p>
+            <p>Do mosto ao enlatamento, cada detalhe é obsessivamente cuidado. Usamos lúpulos premium, processos artesanais e a coragem de fazer diferente — sempre.</p>
+            <p>O resultado? Cervejas que marcam. Experiências que voltam.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVERCLUB -->
+  <section id="everclub">
+    <div class="container">
+      <div class="everclub__inner">
+        <div class="everclub__content reveal">
+          <p class="section-eyebrow">Programa de Fidelidade</p>
+          <h2 class="section-title">OS VERDADEIROS<br>FÃS PAGAM<br><span style="color:var(--fire)">MENOS.</span></h2>
+          <p style="margin-top:20px;font-size:0.95rem;color:var(--ash);max-width:480px;line-height:1.8">
+            Junte-se ao EverClub e transforme cada pedido em um investimento. Quanto mais você bebe, mais você economiza — e mais exclusividade você acessa.
+          </p>
+          <div class="everclub__benefits">
+            <div class="benefit-item">
+              <div class="benefit-item__icon">40</div>
+              <div>
+                <div class="benefit-item__title">Até 40% de Desconto</div>
+                <div class="benefit-item__desc">Em todos os rótulos da linha. Todo pedido, sempre.</div>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-item__icon" style="font-size:1.5rem">◆</div>
+              <div>
+                <div class="benefit-item__title">15% Cashback em EverCoins</div>
+                <div class="benefit-item__desc">Investimento que volta como saldo para usar nas próximas compras.</div>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-item__icon" style="font-size:1.5rem">🔥</div>
+              <div>
+                <div class="benefit-item__title">Acesso Antecipado a Lançamentos</div>
+                <div class="benefit-item__desc">Novos lotes e drops exclusivos antes do público geral.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="everclub__card reveal reveal-delay-2">
+          <p class="everclub__card-eyebrow">◆ EVERCLUB MEMBERSHIP</p>
+          <h3 class="everclub__card-title">SEJA<br>EVERCLUBER</h3>
+          <p class="everclub__card-sub">
+            Crie sua conta gratuita e já comece a aproveitar os preços exclusivos de membro em todos os pedidos.
+          </p>
+          <div class="everclub__card-perks">
+            <div class="perk">Preços exclusivos de Everclubber</div>
+            <div class="perk">Cashback automático em Evercoins</div>
+            <div class="perk">Histórico completo de pedidos</div>
+            <div class="perk">Notificações de novos lotes</div>
+            <div class="perk">Acesso ao EverClub Social</div>
+          </div>
+          <a href="#" class="btn btn--gold btn--full" style="margin-bottom:16px">QUERO SER EVERCLUBER ◆</a>
+          <a href="#" class="btn btn--secondary btn--full">VER PLANOS EVERCOINS</a>
+          <p class="everclub__card-social">
+            <strong>+12.000</strong> Everclubbers ativos
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVERCOINS -->
+  <section id="evercoins">
+    <div class="container">
+      <div class="evercoins__header reveal">
+        <div>
+          <p class="section-eyebrow">Programa de Investimento</p>
+          <h2 class="section-title">INVISTA EM<br>SABOR.</h2>
+        </div>
+        <div>
+          <p class="evercoins__desc">
+            EverCoins (EVC$) é a moeda interna da Everbrew. Você investe um valor real e recebe de volta mais EVC$ para usar nas suas compras. Quanto maior o aporte, maior o bônus. Simples, transparente, saboroso.
+          </p>
+        </div>
+      </div>
+      <div class="coins__grid">
+
+        <div class="coin-plan reveal reveal-delay-1">
+          <p class="coin-plan__tier coin-plan__tier--bronze">◈ EVERbronze</p>
+          <div class="coin-plan__invest">R$ 500</div>
+          <p class="coin-plan__invest-label">Valor do investimento</p>
+          <div class="coin-plan__return">
+            <div class="coin-plan__evc">EVC$ 575</div>
+            <div class="coin-plan__bonus">+15% de bônus</div>
+          </div>
+          <p class="coin-plan__installments">Até 5x sem juros</p>
+          <button class="btn btn--secondary btn--full" onclick="addToCart('Plano EverBronze')">INVESTIR AGORA</button>
+        </div>
+
+        <div class="coin-plan reveal reveal-delay-2">
+          <p class="coin-plan__tier coin-plan__tier--prata">◈ EVERPRATA</p>
+          <div class="coin-plan__invest">R$ 1.000</div>
+          <p class="coin-plan__invest-label">Valor do investimento</p>
+          <div class="coin-plan__return">
+            <div class="coin-plan__evc">EVC$ 1.200</div>
+            <div class="coin-plan__bonus">+20% de bônus</div>
+          </div>
+          <p class="coin-plan__installments">Até 5x sem juros</p>
+          <button class="btn btn--secondary btn--full" onclick="addToCart('Plano EverPrata')">INVESTIR AGORA</button>
+        </div>
+
+        <div class="coin-plan coin-plan--featured reveal reveal-delay-3">
+          <span class="coin-plan__badge">MAIS POPULAR</span>
+          <p class="coin-plan__tier coin-plan__tier--ouro">◈ EVEROURO</p>
+          <div class="coin-plan__invest">R$ 2.000</div>
+          <p class="coin-plan__invest-label">Valor do investimento</p>
+          <div class="coin-plan__return">
+            <div class="coin-plan__evc">EVC$ 2.500</div>
+            <div class="coin-plan__bonus">+25% de bônus</div>
+          </div>
+          <p class="coin-plan__installments">Até 10x sem juros</p>
+          <button class="btn btn--gold btn--full" onclick="addToCart('Plano EverOuro')">INVESTIR AGORA</button>
+        </div>
+
+        <div class="coin-plan reveal reveal-delay-4">
+          <p class="coin-plan__tier coin-plan__tier--plat">◈ EVERPLATINUM</p>
+          <div class="coin-plan__invest">R$ 5.000</div>
+          <p class="coin-plan__invest-label">Valor do investimento</p>
+          <div class="coin-plan__return">
+            <div class="coin-plan__evc">EVC$ 6.500</div>
+            <div class="coin-plan__bonus">+30% de bônus</div>
+          </div>
+          <p class="coin-plan__installments">Até 10x sem juros</p>
+          <button class="btn btn--secondary btn--full" onclick="addToCart('Plano EverPlatinum')">INVESTIR AGORA</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS -->
+  <section id="new-arrivals">
+    <div class="container">
+      <p class="section-eyebrow reveal">Novos Lotes</p>
+      <div class="arrivals__inner reveal">
+        <!-- Featured -->
+        <div class="arrival__feature">
+          <img
+            src="https://www.everbrew.com.br/wp-content/uploads/2022/01/EVEBREW.evermaine-971x1536.png"
+            alt=""
+            class="arrival__feature-img"
+            aria-hidden="true"
+            onerror="this.style.display='none'"
+          />
+          <div class="arrival__feature-content">
+            <span class="arrival__lote">LOTE #48 — RECÉM CHEGADO</span>
+            <h3 class="arrival__title">EVER<br>MAINE</h3>
+            <p class="arrival__desc">
+              O segundo rótulo Juicy IPA da Everbrew, lançado em 2017, continua conquistando paladares exigentes. Amargor tropical com corpo assertivo.
+            </p>
+            <div class="arrival__meta">
+              <div class="arrival-meta__item">
+                <div class="arrival-meta__value">7.7%</div>
+                <div class="arrival-meta__label">ABV</div>
+              </div>
+              <div class="arrival-meta__item">
+                <div class="arrival-meta__value">60</div>
+                <div class="arrival-meta__label">IBU</div>
+              </div>
+              <div class="arrival-meta__item">
+                <div class="arrival-meta__value">473ml</div>
+                <div class="arrival-meta__label">Volume</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <button class="btn btn--primary" onclick="addToCart('Evermaine')">ADICIONAR AO CARRINHO</button>
+              <a href="#" class="btn btn--secondary">VER DETALHES</a>
+            </div>
+          </div>
+          <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--smoke)">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <span class="badge badge--gold">◆ Evercluber</span>
+                <span style="font-family:var(--font-mono);font-size:1rem;color:var(--gold-light);margin-left:12px">EVC$ 28,50</span>
+              </div>
+              <div style="text-align:right">
+                <div style="font-family:var(--font-mono);font-size:0.85rem;color:var(--ash)">R$ 39,40</div>
+                <div style="font-size:0.65rem;color:var(--hop)">+15% cashback</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- List -->
+        <div class="arrival__list">
+          <div class="arrival-item">
+            <img
+              src="https://www.everbrew.com.br/wp-content/uploads/2022/01/EVEBREW.heymate.png"
+              alt="Hey Mate"
+              class="arrival-item__img"
+              onerror="this.style.display='none'"
+            />
+            <div class="arrival-item__info">
+              <div class="arrival-item__style">JUICY IPA · ABV 7.5% · IBU 65</div>
+              <div class="arrival-item__name">HEY MATE!</div>
+              <div class="arrival-item__price"><strong>EVC$ 28,50</strong> · R$ 39,40</div>
+            </div>
+            <button class="btn btn--secondary btn--sm" onclick="addToCart('Hey Mate')">+ CARRINHO</button>
+          </div>
+          <div class="arrival-item">
+            <img
+              src="https://www.everbrew.com.br/wp-content/uploads/2022/01/little-juice.png"
+              alt="Little Juice"
+              class="arrival-item__img"
+              onerror="this.style.display='none'"
+            />
+            <div class="arrival-item__info">
+              <div class="arrival-item__style">LIGHT JUICY IPA · ABV 1% · IBU 32</div>
+              <div class="arrival-item__name">LITTLE JUICE</div>
+              <div class="arrival-item__price"><strong>EVC$ 28,50</strong> · R$ 39,40</div>
+            </div>
+            <button class="btn btn--secondary btn--sm" onclick="addToCart('Little Juice')">+ CARRINHO</button>
+          </div>
+          <div class="arrival-item" style="align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:12px;padding:40px">
+            <p style="font-family:var(--font-display);font-size:1.2rem;color:var(--ash);letter-spacing:0.1em">VER TODOS OS RÓTULOS</p>
+            <a href="#" class="btn btn--secondary">EXPLORAR CATÁLOGO →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KITS -->
+  <section id="kits">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-eyebrow">Combos & Presentes</p>
+        <h2 class="section-title">KITS &<br>COMBOS</h2>
+      </div>
+      <div class="kits__grid">
+        <div class="kit-card reveal reveal-delay-1">
+          <div class="kit-card__decor" aria-hidden="true">13</div>
+          <p class="kit-card__subtitle">Edição Especial · 12 Latas 350ml</p>
+          <h3 class="kit-card__title">CAIXA<br>EVERTREZE</h3>
+          <p class="kit-card__desc">
+            A caixa com os rótulos mais icônicos da Everbrew, direto para quem vive pelos melhores momentos. 12 latas 350ml, selecionadas para surpreender.
+          </p>
+          <div class="kit-card__cta">
+            <a href="#" class="btn btn--primary">GARANTIR MINHA CAIXA →</a>
+          </div>
+        </div>
+        <div class="kit-card reveal reveal-delay-2">
+          <div class="kit-card__decor" aria-hidden="true">♡</div>
+          <p class="kit-card__subtitle">Presente Premium · Customizável</p>
+          <h3 class="kit-card__title">EVERGIFT<br>KIT</h3>
+          <p class="kit-card__desc">
+            Monte o kit perfeito com cervejas, copos e acessórios à escolha. Presenteie com personalidade e sabor — para quem merece o melhor da Everbrew.
+          </p>
+          <div class="kit-card__cta">
+            <a href="#" class="btn btn--secondary">MONTAR MEU KIT →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section id="social-proof">
+    <div class="container">
+      <div class="social-proof__grid">
+        <div class="reveal">
+          <p class="section-eyebrow">Comunidade</p>
+          <div class="sp-number">
+            <div class="sp-number__value">12k+</div>
+            <div class="sp-number__label">Everclubbers Ativos</div>
+          </div>
+          <div class="sp-number">
+            <div class="sp-number__value">★ 4.8</div>
+            <div class="sp-number__label">Nota no Untappd</div>
+          </div>
+          <div class="sp-number">
+            <div class="sp-number__value">7+</div>
+            <div class="sp-number__label">Anos Produzindo</div>
+          </div>
+        </div>
+        <div class="social-proof__Reviews reveal reveal-delay-1">
+          <h2 class="section-title" style="margin-bottom:40px">O QUE<br>DIZEM.</h2>
+          <div class="reviews-grid">
+            <div class="review-card">
+              <div class="review-card__stars">★★★★★</div>
+              <p class="review-card__text">"O EverDank é simplesmente absurdo. Uma Juicy IPA que entrega exatamente o que promete: intensidade do início ao fim. Não consigo imaginar outro rótulo no meu domingo."</p>
+              <div class="review-card__author">
+                <div class="review-card__avatar">LF</div>
+                <div>
+                  <div class="review-card__name">Lucas F.</div>
+                  <div class="review-card__platform">Untappd · Evercluber</div>
+                </div>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-card__stars">★★★★★</div>
+              <p class="review-card__text">"What a Grocery foi uma revelação. O estilo Imperial Sour deles é preciso — acidez equilibrada, corpo full. Impossível tomar só uma lata."</p>
+              <div class="review-card__author">
+                <div class="review-card__avatar">MR</div>
+                <div>
+                  <div class="review-card__name">Marina R.</div>
+                  <div class="review-card__platform">Google · Evercluber Ouro</div>
+                </div>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-card__stars">★★★★★</div>
+              <p class="review-card__text">"O programa de EverCoins é genial. Consegui juntar saldo e comprei uma caixa inteira com desconto. Esse clube é dos melhores do Brasil."</p>
+              <div class="review-card__author">
+                <div class="review-card__avatar">PB</div>
+                <div>
+                  <div class="review-card__name">Pedro B.</div>
+                  <div class="review-card__platform">Untappd · Evercluber Platinum</div>
+                </div>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-card__stars">★★★★★</div>
+              <p class="review-card__text">"Double EverIPA 8% ABV e 80 IBU — exatamente o que eu esperava. Amargor assertivo, lupulagem generosa. A Everbrew não erra."</p>
+              <div class="review-card__author">
+                <div class="review-card__avatar">AK</div>
+                <div>
+                  <div class="review-card__name">André K.</div>
+                  <div class="review-card__platform">Untappd · Evercluber</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="newsletter">
+    <div class="container">
+      <div class="newsletter__inner">
+        <div class="reveal">
+          <h2 class="newsletter__title">SEJA O<br>PRIMEIRO.<br><span>SEMPRE.</span></h2>
+          <p class="newsletter__sub">Novos lotes, drops exclusivos e ofertas para membros direto no seu email.</p>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <form class="newsletter__form" onsubmit="handleNewsletter(event)">
+            <input
+              type="email"
+              class="newsletter__input"
+              placeholder="seu@email.com"
+              required
+              autocomplete="email"
+            />
+            <button type="submit" class="btn btn--primary" style="border-radius:0">ENTRAR →</button>
+          </form>
+          <p class="newsletter__legal">
+            Sem spam. Apenas o que realmente importa. Cancel when you want.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-logo">EVER<span>BREW</span></div>
+          <p class="footer__tagline">Bones for Life · Since 2017</p>
+          <p class="footer__desc">Cervejaria artesanal de Santos, SP. Produzimos cervejas hop-forward de intensidade extrema para apreciadores exigentes.</p>
+          <div class="footer__social">
+            <a href="https://instagram.com/cervejariaeverbrew" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+            <a href="https://facebook.com/cervejariaeverbrew" class="social-btn" target="_blank" rel="noopener" aria-label="Facebook">FB</a>
+            <a href="https://untappd.com/CervejariaEverBrew/beer" class="social-btn" target="_blank" rel="noopener" aria-label="Untappd">UT</a>
+            <a href="https://wa.me/5513997034189" class="social-btn" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+          </div>
+          <p style="font-family:var(--font-mono);font-size:0.65rem;color:var(--steel)">sac@everbrew.com.br</p>
+        </div>
+        <div>
+          <p class="footer__col-title">Cervejas</p>
+          <div class="footer__links">
+            <a href="#">Todos os Rótulos</a>
+            <a href="#">Juicy IPAs</a>
+            <a href="#">Double IPAs</a>
+            <a href="#">Imperial Sours</a>
+            <a href="#">Light IPAs</a>
+            <a href="#">Novos Lotes</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer__col-title">EverClub</p>
+          <div class="footer__links">
+            <a href="#">O que é o EverClub?</a>
+            <a href="#">Planos EverCoins</a>
+            <a href="#">EverClub Social</a>
+            <a href="#">Ranking de Membros</a>
+            <a href="#">Entrar / Cadastrar</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer__col-title">Loja</p>
+          <div class="footer__links">
+            <a href="#">Kits & Combos</a>
+            <a href="#">EverGift Kit</a>
+            <a href="#">Caixa EverTreze</a>
+            <a href="#">Souvenirs</a>
+            <a href="#">Copos & Acessórios</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer__col-title">Empresa</p>
+          <div class="footer__links">
+            <a href="#">Quem Somos</a>
+            <a href="#">A Cervejaria</a>
+            <a href="#">EverGroup</a>
+            <a href="#">Contatos</a>
+            <a href="#">Seja um Parceiro</a>
+            <a href="#">Termos e Condições</a>
+            <a href="#">Política de Privacidade</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__legal">
+          © 2017–2026 Cervejaria Everbrew. Todos os direitos reservados.<br>
+          Proibida a venda e o consumo de bebidas alcoólicas para menores de 18 anos. Beba com moderação.
+        </p>
+        <div class="footer__18">18+</div>
+        <div class="footer__payments">
+          <span class="payment-badge">Visa</span>
+          <span class="payment-badge">Master</span>
+          <span class="payment-badge">Pix</span>
+          <span class="payment-badge">Boleto</span>
+          <span class="payment-badge">AmEx</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toast-msg">Adicionado ao carrinho</span>
+  </div>
+
+  <!-- STICKY CART (Mobile) -->
+  <div id="sticky-cart">
+    <div class="sticky-cart__info">
+      <div class="sticky-cart__name">Evermaine · Lata 473ml</div>
+      <div class="sticky-cart__price">R$ 39,40 · EVC$ 28,50</div>
+    </div>
+    <button class="btn btn--primary btn--sm" onclick="addToCart('Evermaine')">ADICIONAR</button>
+  </div>
+
+  <script>
+    /* ============================================
+       AGE GATE
+    ============================================ */
+    (function () {
+      const gate = document.getElementById('age-gate');
+      if (sessionStorage.getItem('eb_age_ok') === '1') {
+        gate.classList.add('hidden');
+      }
+    })();
+
+    function confirmAge() {
+      sessionStorage.setItem('eb_age_ok', '1');
+      document.getElementById('age-gate').classList.add('hidden');
+    }
+
+    function denyAge() {
+      document.getElementById('age-gate').innerHTML =
+        '<div class="age-gate__inner"><p style="font-family:var(--font-display);font-size:3rem;color:var(--ash)">VOLTE QUANDO TIVER 18.</p></div>';
+    }
+
+    /* ============================================
+       STICKY HEADER
+    ============================================ */
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      header.classList.toggle('scrolled', y > 40);
+      lastScroll = y;
+    }, { passive: true });
+
+    /* ============================================
+       MOBILE MENU
+    ============================================ */
+    function toggleMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('active');
+      document.body.style.overflow = document.getElementById('mobile-menu').classList.contains('open') ? 'hidden' : '';
+    }
+
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* ============================================
+       SCROLL REVEAL
+    ============================================ */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ============================================
+       CART
+    ============================================ */
+    let cartCount = 0;
+
+    function addToCart(productName) {
+      cartCount++;
+      document.querySelector('.cart-badge').textContent = cartCount;
+
+      const msg = document.getElementById('toast-msg');
+      const toast = document.getElementById('toast');
+      msg.textContent = `${productName} adicionado ao carrinho`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    /* ============================================
+       NEWSLETTER
+    ============================================ */
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'EM BREVE ✓';
+      btn.style.background = 'var(--hop)';
+      btn.disabled = true;
+      e.target.querySelector('input').disabled = true;
+    }
+
+    /* ============================================
+       SMOOTH ANCHOR SCROLL
+    ============================================ */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          closeMenu();
+          const offset = parseInt(getComputedStyle(document.documentElement)
+            .getPropertyValue('--nav-h')) || 72;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
