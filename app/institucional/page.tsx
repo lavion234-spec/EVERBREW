@@ -54,21 +54,15 @@ function Lightbox({ item, onClose, onPrev, onNext, hasPrev, hasNext }: {
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center"
+      className="fixed inset-0 z-[200] bg-void/95 backdrop-blur-sm flex items-center justify-center"
       role="dialog"
       aria-modal="true"
+      onClick={onClose}
     >
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-void/95 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
       {/* Close */}
       <button
-        onClick={onClose}
-        className="absolute top-5 right-5 z-10 w-10 h-10 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:border-fire transition-colors"
+        onClick={(e) => { e.stopPropagation(); onClose() }}
+        className="absolute top-5 right-5 z-[210] w-10 h-10 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:border-fire transition-colors"
         aria-label="Fechar"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
@@ -80,8 +74,8 @@ function Lightbox({ item, onClose, onPrev, onNext, hasPrev, hasNext }: {
       {/* Prev */}
       {hasPrev && (
         <button
-          onClick={onPrev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:bg-fire/80 hover:border-fire transition-all"
+          onClick={(e) => { e.stopPropagation(); onPrev && onPrev() }}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-[210] w-11 h-11 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:bg-fire/80 hover:border-fire transition-all"
           aria-label="Anterior"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6" /></svg>
@@ -91,28 +85,27 @@ function Lightbox({ item, onClose, onPrev, onNext, hasPrev, hasNext }: {
       {/* Next */}
       {hasNext && (
         <button
-          onClick={onNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:bg-fire/80 hover:border-fire transition-all"
+          onClick={(e) => { e.stopPropagation(); onNext && onNext() }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-[210] w-11 h-11 flex items-center justify-center border border-smoke bg-iron text-ash hover:text-bone hover:bg-fire/80 hover:border-fire transition-all"
           aria-label="Próximo"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="9 18 15 12 9 6" /></svg>
         </button>
       )}
 
-      {/* Content */}
-      <div className="relative z-10 flex items-center justify-center w-full h-full px-16 py-12">
+      {/* Content — stopPropagation garante que clicar na mídia não fecha */}
+      <div
+        className="relative z-[205] flex items-center justify-center px-16 py-12 max-w-full max-h-full"
+        onClick={(e) => e.stopPropagation()}
+      >
         {item.type === 'image' ? (
           <img
             src={item.src}
             alt={item.alt}
-            className="max-w-full max-h-full object-contain shadow-2xl border border-smoke/40"
-            onClick={(e) => e.stopPropagation()}
+            className="max-w-[90vw] max-h-[85vh] object-contain shadow-2xl border border-smoke/40"
           />
         ) : (
-          <div
-            className="w-full max-w-4xl aspect-video shadow-2xl border border-smoke/40"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="w-[85vw] max-w-4xl aspect-video shadow-2xl border border-smoke/40">
             <iframe
               src={`https://www.youtube.com/embed/${item.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
               title={item.title}
