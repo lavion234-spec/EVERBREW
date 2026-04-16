@@ -3,11 +3,11 @@ import { LinkButton } from '@/components/ui/Button'
 import { COIN_PLANS } from '@/lib/data'
 import type { CoinPlan } from '@/types'
 
-const tierStyles: Record<CoinPlan['tier'], { color: string; label: string }> = {
-  bronze:   { color: '#CD7F32', label: '◈ EverBronze' },
-  prata:    { color: '#C0C0C0', label: '◈ EverPrata'  },
-  ouro:     { color: '#E8C547', label: '◈ EverOuro'   },
-  platinum: { color: '#E5E4E2', label: '◈ EverPlatinum' },
+const tierStyles: Record<CoinPlan['tier'], { color: string; label: string; img: string }> = {
+  bronze:   { color: '#CD7F32', label: '◈ EverBronze',   img: '/EVERBREW/coins/everbronze.png'   },
+  prata:    { color: '#C0C0C0', label: '◈ EverPrata',    img: '/EVERBREW/coins/everprata.png'    },
+  ouro:     { color: '#E8C547', label: '◈ EverOuro',     img: '/EVERBREW/coins/everouro.png'     },
+  platinum: { color: '#E5E4E2', label: '◈ EverPlatinum', img: '/EVERBREW/coins/everplatinum.png' },
 }
 
 export function EverclubSection() {
@@ -125,6 +125,11 @@ export function EvercoinsSection() {
                     MAIS POPULAR
                   </span>
                 )}
+                <img
+                  src={tier.img}
+                  alt={tier.label}
+                  className="w-24 h-24 object-contain mb-4"
+                />
                 <p
                   className="font-mono text-[0.65rem] tracking-[0.2em] uppercase mb-5"
                   style={{ color: tier.color }}
