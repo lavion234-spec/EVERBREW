@@ -368,7 +368,16 @@ export default function EverGroupPage() {
         {/* ── How it Works ─────────────────────────────── */}
         <section className="section-padding bg-carbon border-b border-smoke">
           <div className="container-main">
-            <div className="max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+              {/* Mascot */}
+              <div className="flex items-center justify-center">
+                <img
+                  src={`${CDN}/2023/11/caveira-bracos-cruzados.png`}
+                  alt="Mascote Everbrew"
+                  className="w-72 lg:w-full max-w-sm object-contain drop-shadow-2xl"
+                />
+              </div>
 
               {/* Steps */}
               <div>
