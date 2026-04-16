@@ -213,8 +213,7 @@ export default function EverGroupPage() {
             GROUP
           </span>
           <div className="container-main relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
+            <div className="max-w-2xl">
                 <div className="flex items-center gap-3 mb-5">
                   {/* WhatsApp icon */}
                   <div className="w-8 h-8 bg-[#25D366]/15 border border-[#25D366]/40 flex items-center justify-center">
@@ -273,8 +272,6 @@ export default function EverGroupPage() {
                   ))}
                 </div>
               </div>
-
-
             </div>
           </div>
         </section>
