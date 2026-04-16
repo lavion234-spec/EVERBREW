@@ -51,48 +51,55 @@ export default function EverClubPage() {
 
         {/* Hero */}
         <section className="relative pt-36 pb-20 overflow-hidden bg-carbon border-b border-smoke">
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 right-0 font-display text-[22vw] leading-none text-white/[0.02] select-none flex items-center"
-          >
-            CLUB
-          </span>
           <div className="container-main relative">
-            <p className="eyebrow mb-4">Membership Exclusivo</p>
-            <h1
-              className="font-display text-bone leading-none"
-              style={{ fontSize: 'clamp(3.5rem, 9vw, 7.5rem)' }}
-            >
-              EVER<span className="text-gold">CLUB</span>
-            </h1>
-            <p
-              className="text-ash mt-5 max-w-lg"
-              style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)' }}
-            >
-              Acesso exclusivo. Preços impossíveis para quem está fora. Drops que nunca aparecem no site público.
-              Se você leva cerveja a sério — o EverClub foi feito para você.
-            </p>
-            <div className="flex flex-wrap gap-4 mt-10">
-              <LinkButton href="#planos" variant="gold" size="lg">
-                VER PLANOS →
-              </LinkButton>
-              <LinkButton href="#beneficios" variant="secondary" size="lg">
-                COMO FUNCIONA
-              </LinkButton>
-            </div>
-
-            {/* Social proof strip */}
-            <div className="flex flex-wrap gap-8 mt-14">
-              {[
-                ['12.000+', 'Everclubers'],
-                ['40%', 'de desconto'],
-                ['Até +30%', 'em EverCoins'],
-              ].map(([val, lab]) => (
-                <div key={lab}>
-                  <p className="font-display text-[2rem] text-gold leading-none">{val}</p>
-                  <p className="text-[0.7rem] uppercase tracking-[0.25em] text-ash mt-1">{lab}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="eyebrow mb-4">Membership Exclusivo</p>
+                <h1
+                  className="font-display text-bone leading-none"
+                  style={{ fontSize: 'clamp(3.5rem, 9vw, 7.5rem)' }}
+                >
+                  EVER<span className="text-gold">CLUB</span>
+                </h1>
+                <p
+                  className="text-ash mt-5 max-w-lg"
+                  style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)' }}
+                >
+                  Acesso exclusivo. Preços impossíveis para quem está fora. Drops que nunca aparecem no site público.
+                  Se você leva cerveja a sério — o EverClub foi feito para você.
+                </p>
+                <div className="flex flex-wrap gap-4 mt-10">
+                  <LinkButton href="#planos" variant="gold" size="lg">
+                    VER PLANOS →
+                  </LinkButton>
+                  <LinkButton href="#beneficios" variant="secondary" size="lg">
+                    COMO FUNCIONA
+                  </LinkButton>
                 </div>
-              ))}
+
+                {/* Social proof strip */}
+                <div className="flex flex-wrap gap-8 mt-14">
+                  {[
+                    ['12.000+', 'Everclubers'],
+                    ['40%', 'de desconto'],
+                    ['Até +30%', 'em EverCoins'],
+                  ].map(([val, lab]) => (
+                    <div key={lab}>
+                      <p className="font-display text-[2rem] text-gold leading-none">{val}</p>
+                      <p className="text-[0.7rem] uppercase tracking-[0.25em] text-ash mt-1">{lab}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Hero image */}
+              <div className="relative hidden lg:block">
+                <img
+                  src="/EVERBREW/everclub-hero.jpg"
+                  alt="EverClub — O Clube de Fidelidade da Everbrew"
+                  className="w-full h-auto object-cover rounded-sm"
+                />
+              </div>
             </div>
           </div>
         </section>
