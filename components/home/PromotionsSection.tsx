@@ -125,44 +125,48 @@ export function PromotionsSection() {
     <section id="promotions" className="section-padding border-b border-smoke">
       <div className="container-main">
         {/* Header */}
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <p className="eyebrow">Caixas & Combos</p>
-            <h2 className="font-display leading-[0.92] text-bone" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)' }}>
-              PROMOÇÕES<br />EVERTREZE
-            </h2>
-          </div>
-
-          {/* Arrow controls */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => scroll('prev')}
-              disabled={!canPrev}
-              aria-label="Anterior"
-              className={clsx(
-                'w-10 h-10 border flex items-center justify-center font-mono text-sm transition-colors duration-200',
-                canPrev
-                  ? 'border-smoke text-bone hover:border-bone hover:bg-smoke'
-                  : 'border-steel text-steel cursor-not-allowed'
-              )}
-            >
-              ←
-            </button>
-            <button
-              onClick={() => scroll('next')}
-              disabled={!canNext}
-              aria-label="Próximo"
-              className={clsx(
-                'w-10 h-10 border flex items-center justify-center font-mono text-sm transition-colors duration-200',
-                canNext
-                  ? 'border-smoke text-bone hover:border-bone hover:bg-smoke'
-                  : 'border-steel text-steel cursor-not-allowed'
-              )}
-            >
-              →
-            </button>
-          </div>
+        <div className="mb-10">
+          <p className="eyebrow">Caixas & Combos</p>
+          <h2 className="font-display leading-[0.92] text-bone" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)' }}>
+            PROMOÇÕES<br />EVERTREZE
+          </h2>
         </div>
+
+        {/* Carousel wrapper com setas laterais */}
+        <div className="relative">
+          {/* Seta esquerda */}
+          <button
+            onClick={() => scroll('prev')}
+            disabled={!canPrev}
+            aria-label="Anterior"
+            className={clsx(
+              'absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10',
+              'w-11 h-11 border flex items-center justify-center font-mono text-base',
+              'bg-carbon transition-all duration-200',
+              canPrev
+                ? 'border-smoke text-bone hover:border-bone hover:bg-smoke cursor-pointer'
+                : 'border-steel text-steel opacity-0 pointer-events-none'
+            )}
+          >
+            ←
+          </button>
+
+          {/* Seta direita */}
+          <button
+            onClick={() => scroll('next')}
+            disabled={!canNext}
+            aria-label="Próximo"
+            className={clsx(
+              'absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10',
+              'w-11 h-11 border flex items-center justify-center font-mono text-base',
+              'bg-carbon transition-all duration-200',
+              canNext
+                ? 'border-smoke text-bone hover:border-bone hover:bg-smoke cursor-pointer'
+                : 'border-steel text-steel opacity-0 pointer-events-none'
+            )}
+          >
+            →
+          </button>
 
         {/* Carousel track */}
         <div
@@ -175,6 +179,7 @@ export function PromotionsSection() {
             <PromoCard key={promo.id} promo={promo} />
           ))}
         </div>
+        </div>{/* fim wrapper relativo */}
       </div>
     </section>
   )
