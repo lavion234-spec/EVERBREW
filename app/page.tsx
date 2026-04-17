@@ -8,6 +8,7 @@ import { ManifestoSection } from '@/components/home/ManifestoSection'
 import { EverclubSection } from '@/components/home/EverclubSection'
 import { EvercoinsSection } from '@/components/home/EvercoinsSection'
 import { NewArrivalsSection } from '@/components/home/NewArrivalsSection'
+import { PromotionsSection } from '@/components/home/PromotionsSection'
 import { KitsSection } from '@/components/home/KitsSection'
 import { SocialProofSection } from '@/components/home/SocialProofSection'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
@@ -23,6 +24,7 @@ export default function HomePage() {
         <HeroBannerCarousel />
         <TickerBanner />
         <ProductsSection />
+        <PromotionsSection />
         <ManifestoSection />
         <EverclubSection />
         <EvercoinsSection />

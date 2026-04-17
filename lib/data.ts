@@ -338,6 +338,130 @@ export const REVIEWS: Review[] = [
 export const FEATURED_PRODUCTS = PRODUCTS.filter((p) => p.isFeatured).slice(0, 4)
 export const NEW_PRODUCTS       = PRODUCTS.filter((p) => p.isNew)
 
+// ─── Caixas Evertreze — Promoções ──────────────────────────────
+export interface BoxPromotion {
+  id:                string
+  name:              string
+  subtitle:          string
+  imageUrl:          string
+  abv?:              number
+  ibu?:              number
+  priceClub:         number
+  priceClient:       number
+  discountLabel:     string
+  cashbackLabel:     string
+  ctaHref:           string
+  isSpecial?:        boolean
+  ctaPrimaryLabel?:  string
+  ctaSecondaryLabel?: string
+}
+
+export const BOX_PROMOTIONS: BoxPromotion[] = [
+  {
+    id:            'caixa-evertreze-red-ale',
+    name:          'CAIXA EVERTREZE RED ALE',
+    subtitle:      '12 UNIDADES',
+    imageUrl:      `${CDN}/2023/09/evertreze-red-ale-lata.png`,
+    abv:           5.1,
+    ibu:           30,
+    priceClub:     107,
+    priceClient:   147,
+    discountLabel: 'até 40% Off',
+    cashbackLabel: '15% cashback',
+    ctaHref:       '/produto/caixa-evertreze-red-ale',
+  },
+  {
+    id:            'caixa-evertreze-hop-lager',
+    name:          'CAIXA EVERTREZE HOP LAGER',
+    subtitle:      '12 UNIDADES',
+    imageUrl:      `${CDN}/2023/09/evertreze-hop-lager-lata.png`,
+    abv:           4.8,
+    ibu:           20,
+    priceClub:     107,
+    priceClient:   147,
+    discountLabel: 'até 40% Off',
+    cashbackLabel: '15% cashback',
+    ctaHref:       '/produto/caixa-evertreze-hop-lager',
+  },
+  {
+    id:            'caixa-evertreze-ipa',
+    name:          'CAIXA EVERTREZE IPA',
+    subtitle:      '12 UNIDADES',
+    imageUrl:      `${CDN}/2023/09/evertreze-ipa-lata.png`,
+    abv:           6.0,
+    ibu:           55,
+    priceClub:     148,
+    priceClient:   188,
+    discountLabel: 'até 40% Off',
+    cashbackLabel: '15% cashback',
+    ctaHref:       '/produto/caixa-evertreze-ipa',
+  },
+  {
+    id:            'caixa-evertreze-sour',
+    name:          'CAIXA EVERTREZE SOUR',
+    subtitle:      '12 UNIDADES',
+    imageUrl:      `${CDN}/2023/09/evertreze-sour-lata.png`,
+    abv:           3.8,
+    ibu:           7,
+    priceClub:     148,
+    priceClient:   188,
+    discountLabel: 'até 40% Off',
+    cashbackLabel: '15% cashback',
+    ctaHref:       '/produto/caixa-evertreze-sour',
+  },
+  {
+    id:            'caixa-evertreze-session-ipa',
+    name:          'CAIXA EVERTREZE SESSION IPA',
+    subtitle:      '12 UNIDADES',
+    imageUrl:      `${CDN}/2023/09/evertreze-sessionipa-lata.png`,
+    abv:           4.6,
+    ibu:           30,
+    priceClub:     138,
+    priceClient:   178,
+    discountLabel: 'até 40% Off',
+    cashbackLabel: '15% cashback',
+    ctaHref:       '/produto/caixa-evertreze-session-ipa',
+  },
+  {
+    id:            'cx-degustacao-evertreze',
+    name:          'CX DEGUSTAÇÃO LINHA EVERTREZE',
+    subtitle:      '12 UNIDADES',
+    imageUrl:      `${CDN}/2023/10/cx-degustacao-evertreze.png`,
+    priceClub:     124,
+    priceClient:   164,
+    discountLabel: 'até 40% Off',
+    cashbackLabel: '15% cashback',
+    ctaHref:       '/produto/cx-degustacao-linha-evertreze',
+  },
+  {
+    id:            'caixa-evertreze-pilsen',
+    name:          'CAIXA EVERTREZE PILSEN',
+    subtitle:      '12 UNIDADES',
+    imageUrl:      `${CDN}/2023/09/evertreze-pilsen-lata.png`,
+    abv:           4.8,
+    ibu:           14,
+    priceClub:     96,
+    priceClient:   136,
+    discountLabel: 'até 40% Off',
+    cashbackLabel: '15% cashback',
+    ctaHref:       '/produto/caixa-evertreze-pilsen',
+  },
+  {
+    id:                 'caixa-evertreze',
+    name:               'CAIXA EVERTREZE',
+    subtitle:           'BONES FOR LIFE',
+    imageUrl:           `${CDN}/2023/09/caixa-evertreze-composicao.png`,
+    isSpecial:          true,
+    ctaPrimaryLabel:    'Confira agora mesmo!',
+    ctaSecondaryLabel:  'Escolha suas opções',
+    priceClub:          0,
+    priceClient:        0,
+    discountLabel:      '',
+    cashbackLabel:      '',
+    ctaHref:            '/produto/caixa-evertreze-12latas',
+  },
+]
+
 export const SOUVENIRS: Souvenir[] = [
   // ── Bonés ──────────────────────────────────────────────────────────────
   {
